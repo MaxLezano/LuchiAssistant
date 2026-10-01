@@ -1,4 +1,4 @@
-#Requires -RunAsAdministrator
+﻿#Requires -RunAsAdministrator
 <#
 .SYNOPSIS
   Crea (o completa) la VM de Home Assistant OS en Hyper-V. Idempotente: se puede correr varias veces.
