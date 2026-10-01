@@ -39,3 +39,15 @@ Prueba de tool calling con `think: false` y temperatura 0 ([spikes/ollama](../sp
 | VRAM del modelo | ≈ 5,5 GB |
 
 > **Ojo con la VRAM:** con ComfyUI abierto, el escritorio y las apps ya usan ≈ 6,2 GB de los 12 GB, y con el LLM cargado quedan ≈ 0,6 GB libres: no entra faster-whisper. Mientras se use Luchi hay que cerrar ComfyUI (o liberar su VRAM). Se tiene en cuenta para el modo juego y el riesgo de VRAM compartida (PLAN.md §10, F3).
+
+## Python
+
+| Qué | Valor |
+|---|---|
+| uv | 0.11.2 |
+| Python de los proyectos | **3.12.13** (`uv python install 3.12`); cada proyecto fija `requires-python = "==3.12.*"` y `.python-version`. La 3.14 del sistema no se usa |
+| Driver NVIDIA | 616.92 (CUDA 13.4 en el driver) |
+| PyTorch | 2.11.0+cu128, desde el índice `download.pytorch.org/whl/cu128` (`[tool.uv.sources]`) |
+| CTranslate2 (faster-whisper) | 4.8.2 con `nvidia-cublas-cu12` y `nvidia-cudnn-cu12` 9; en Windows hay que agregar sus carpetas `bin` al buscador de DLL |
+
+Verificación ([spikes/gpu](../spikes/gpu/)): `cd spikes/gpu && uv run python verificar.py` → Python 3.12, `torch.cuda.is_available() = True`, RTX 3080 con cuDNN 9.19, CTranslate2 ve 1 GPU con `float16` e `int8_float16`.
