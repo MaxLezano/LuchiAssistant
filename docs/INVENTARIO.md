@@ -10,13 +10,11 @@
 | Comedor | **Tele Comedor** | TCL 55" con Google TV ("Smart TV") · `192.168.100.139` | Google Home | Detectada: Google Cast ✅, Android TV Remote (falta vincular) | Local |
 | Comedor | **Luz Balcón** | Interruptor Wi-Fi genérico de 3 teclas, tecla 1 | Smart Life (Tuya) | — | Tuya (ver abajo) |
 | Comedor | **Luz Comedor** | Mismo interruptor de 3 teclas, tecla 2 | Smart Life (Tuya) | — | Tuya (ver abajo) |
-| Habitación de Luz | **Tele de Luz** *(nombre a confirmar)* | TCL 43" con Android TV | Google Home | Por confirmar cuál de las teles detectadas es | Local |
-| Habitación de Luz | **Luz Habitación Luz** | Interruptor Wi-Fi genérico de 2 teclas, tecla 1 | Smart Life (Tuya) | — | Tuya (ver abajo) |
-| Habitación de Luz | **Luz Placard** | Mismo interruptor de 2 teclas, tecla 2 | Smart Life (Tuya) | — | Tuya (ver abajo) |
-| Habitación principal | **Tele Principal** *(nombre a confirmar)* | TCL 50" con Google TV | Google Home | Por confirmar | Local |
+| Habitación de Luz | **Tele de Luz** | TCL 43" con Android TV | Google Home | No detectada todavía (apagada) | Local |
+| Habitación de Luz | **Habitación Luz** | Interruptor Wi-Fi genérico de 2 teclas, tecla 1 | Smart Life (Tuya) | — | Tuya (ver abajo) |
+| Habitación de Luz | **Placard Luz** | Mismo interruptor de 2 teclas, tecla 2 | Smart Life (Tuya) | — | Tuya (ver abajo) |
+| Habitación principal | **Tele Habitación** | TCL 50" con Google TV ("Smart TV Pro") · `192.168.100.8` | Google Home | Detectada: Google Cast ✅, Android TV Remote y DLNA (falta vincular) | Local |
 | — | **Cámara** | Cámara IP genérica china | App del fabricante | — | Fuera del alcance actual (posible RTSP/ONVIF local) |
-
-Detectada en la red y todavía sin ubicar: **"Tele Habitación"**, TCL "Smart TV Pro", `192.168.100.8`. Ofrece Google Cast, Android TV Remote y DLNA.
 
 > La tecla 3 del interruptor del comedor no se usa.
 
@@ -47,7 +45,7 @@ No forma parte del roadmap. Si tiene RTSP/ONVIF se puede agregar localmente más
 
 ## Pendiente
 
-- [ ] Confirmar el nombre de la tele de la habitación de Luz y el de la habitación principal, y cuál es "Tele Habitación" (`192.168.100.8`).
-- [ ] Prender la tercera tele para que Home Assistant la detecte.
+- [x] Nombres confirmados por el usuario.
+- [ ] Prender la **Tele de Luz** para que Home Assistant la detecte (F0-08).
 - [ ] Elegir cómo integrar los interruptores Tuya (F0-08).
 - [ ] Reservar en el router las IPs de las teles y de la VM de Home Assistant.
