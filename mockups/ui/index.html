@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Luchi · prototipo de interfaz</title>
+<link rel="stylesheet" href="ui.css">
+</head>
+<body>
+<div class="desktop" id="desktop">
+  <div class="desktop-icons" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span>
+  </div>
+
+  <!-- isla: borde negro arriba + Luchi flotando debajo -->
+  <div class="notch" id="notch" title="Luchi">
+    <i class="dot"></i><span class="label" id="recLabel">Grabando · 00:00</span>
+  </div>
+  <div class="luchi-stage hidden" id="stage"><img id="luchiImg" alt="Luchi"></div>
+  <div class="bubble" id="bubble"></div>
+
+  <!-- panel para manejar el prototipo -->
+  <div class="proto" id="proto">
+    <h4>Prototipo de interfaz</h4>
+    <button class="min" id="protoMin" title="Minimizar">–</button>
+    <p>Simula la app. Nada de esto es funcional todavía.</p>
+    <div class="grp">
+      <button class="primary" data-demo="full">Decir "Luchi, prendé la luz"</button>
+    </div>
+    <div class="grp">
+      <button data-demo="pregunta">Pregunta</button>
+      <button data-demo="error">Error</button>
+      <button data-demo="grabar">Grabar reunión</button>
+      <button data-demo="dormido">Silenciar</button>
+      <button data-demo="compania">Modo compañía</button>
+      <button data-demo="ocultar">Ocultar</button>
+    </div>
+    <div class="grp">
+      <button data-demo="recordatorio">Recordatorio</button>
+      <button data-demo="corregir">"Eso no es lo que quería"</button>
+      <button data-demo="dictado">Dictado</button>
+      <button data-demo="preguntar">Pregunta general</button>
+    </div>
+    <p style="margin-top:6px">Ventanas</p>
+    <div class="grp">
+      <button data-open="bienvenida">Bienvenida</button>
+      <button data-open="general">Ajustes</button>
+      <button data-open="tuluchi">Tu Luchi</button>
+      <button data-open="grabaciones">Grabaciones</button>
+      <button data-open="casa">Dispositivos</button>
+      <button data-open="recordatorios">Recordatorios</button>
+      <button data-open="escenas">Escenas</button>
+      <button data-open="historial">Historial</button>
+      <button data-open="cuenta">Cuenta</button>
+      <button data-open="estado">Estado</button>
+      <button data-open="laboratorio">Laboratorio</button>
+    </div>
+    <div class="grp">
+      <button id="themeBtn">Tema claro / oscuro</button>
+    </div>
+  </div>
+
+  <!-- ventana principal de la app -->
+  <div class="window" id="win" role="dialog" aria-label="Luchi">
+    <div class="titlebar">
+      <span class="mini-mochi"></span><span>Luchi</span><span class="grow"></span>
+      <button class="wbtn" title="Minimizar" data-close>—</button>
+      <button class="wbtn" title="Maximizar">▢</button>
+      <button class="wbtn close" title="Cerrar" data-close>✕</button>
+    </div>
+    <div class="body">
+      <nav class="sidebar" id="sidebar"></nav>
+      <main class="content" id="content"></main>
+    </div>
+  </div>
+
+  <div class="taskbar">
+    <span class="app"></span><span class="app"></span><span class="app"></span><span class="app"></span><span class="app"></span>
+    <div class="tray">
+      <button class="tray-luchi" id="trayBtn" title="Luchi"><span class="mini-mochi" id="trayMochi"></span></button>
+      <span>ESP</span><span id="clock">15:56</span>
+    </div>
+  </div>
+  <div class="tray-menu" id="trayMenu">
+    <div class="head">Luchi está escuchando · di "Luchi"</div>
+    <button data-open="general">⚙️ Ajustes</button>
+    <button data-open="tuluchi">🎨 Tu Luchi</button>
+    <button data-open="grabaciones">🎙️ Grabaciones</button>
+    <button data-open="casa">🏠 Dispositivos</button>
+    <button data-open="recordatorios">⏰ Recordatorios</button>
+    <button data-open="historial">🕘 Historial</button>
+    <button data-open="estado">🩺 Estado del sistema</button>
+    <hr>
+    <button id="muteBtn">🔇 Silenciar micrófono</button>
+    <button data-demo="compania">👀 Dejar a Luchi visible</button>
+    <hr>
+    <button>⏻ Salir de Luchi</button>
+  </div>
+  <div class="toast" id="toast"></div>
+</div>
+<script src="datos.js"></script>
+<script src="ui.js"></script>
+</body>
+</html>

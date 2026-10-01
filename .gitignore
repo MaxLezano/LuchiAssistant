@@ -1,0 +1,73 @@
+# --- Secretos y datos personales (nunca a git) ---
+.env
+.env.*
+*.pem
+*.key
+secrets/
+voice-data/
+Grabaciones/
+recordings/
+*.mp3
+*.wav
+*.flac
+!assets/**/*.wav
+*.sqlite
+*.sqlite3
+*.db
+
+# --- Modelos (se descargan o entrenan localmente) ---
+models/
+*.onnx
+*.tflite
+*.pt
+*.pth
+*.ckpt
+*.safetensors
+*.gguf
+*.npy
+
+# --- Spikes: datos generados ---
+spikes/**/data/
+spikes/**/output/
+spikes/**/samples/
+
+# --- Infra: discos de VM y descargas ---
+*.vhdx
+*.vhd
+*.iso
+*.zip
+*.xz
+
+# --- Frames exportados por el prototipo para tests visuales ---
+mockups/animaciones/frames/
+
+# --- Node / Vite / Tauri ---
+node_modules/
+dist/
+.vite/
+coverage/
+apps/desktop/public/luchi/
+apps/desktop/src-tauri/target/
+apps/desktop/src-tauri/gen/schemas/
+target/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# --- Logs ---
+logs/
+*.log
+
+# --- Editor / SO ---
+.vscode/*
+!.vscode/extensions.json
+.idea/
+Thumbs.db
+Desktop.ini
+.DS_Store

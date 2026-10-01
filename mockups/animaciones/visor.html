@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visor de Luchi</title>
+<style>
+  :root { --bg: #f4f1ec; --fg: #3a3238; --muted: #8a7f88; --line: #00000014; }
+  body.dark { --bg: #1b1e2b; --fg: #ece6ee; --muted: #a59bb0; --line: #ffffff14; }
+  body.wall { --fg: #fff; --muted: #f6eef8; --line: #ffffff30; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.45 "Segoe UI", system-ui, sans-serif; color: var(--fg); background: var(--bg); transition: background .3s; }
+  body.wall { background: linear-gradient(135deg, #6a8caf 0%, #c69bb6 50%, #f2c4a0 100%) fixed; }
+  header { position: sticky; top: 0; z-index: 2; display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+           padding: 12px 16px; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  body.wall header { background: #0002; }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 8px 0 0; }
+  nav a { color: var(--fg); text-decoration: none; margin-right: 12px; font-size: 14px; opacity: .8; }
+  nav a:hover { opacity: 1; text-decoration: underline; }
+  .grp { display: flex; gap: 4px; }
+  button { font: inherit; font-size: 14px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--fg); cursor: pointer; }
+  button.on { background: var(--fg); color: var(--bg); }
+  body.wall button.on { color: #6a5a70; }
+  section { max-width: 1240px; margin: 0 auto; padding: 8px 16px 24px; }
+  h2 { font-size: 20px; margin: 24px 0 4px; }
+  .lead { color: var(--muted); margin: 0 0 12px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+  .card { border: 1px solid var(--line); border-radius: 16px; padding: 10px; text-align: center; }
+  .stage { height: 220px; display: grid; place-items: center; }
+  .stage img { width: 220px; height: 220px; }
+  body.mini .stage { height: 100px; }
+  body.mini .stage img { width: 100px; height: 100px; }
+  h3 { font-size: 15px; margin: 4px 0 2px; }
+  p { margin: 0; color: var(--muted); font-size: 13px; }
+  .sheet { width: 100%; height: auto; display: block; border: 1px solid var(--line); border-radius: 16px; }
+</style>
+</head>
+<body class="dark">
+<header>
+  <h1>Luchi</h1>
+  <nav><a href="#emociones">Emociones</a><a href="#colores">Colores</a><a href="#ojos">Ojos</a><a href="#bocas">Bocas</a>
+       <a href="#tatuajes">Tatuajes</a><a href="#accesorios">Accesorios</a><a href="#presets">Presets</a></nav>
+  <div class="grp" id="bg">
+    <button data-v="light">Claro</button>
+    <button data-v="dark" class="on">Oscuro</button>
+    <button data-v="wall">Fondo de pantalla</button>
+  </div>
+  <div class="grp" id="size">
+    <button data-v="big" class="on">Grande</button>
+    <button data-v="mini">Tamaño isla</button>
+  </div>
+</header>
+
+<section id="emociones">
+  <h2>Emociones</h2>
+  <p class="lead">Cada emoción corresponde a un estado de la app (ver docs/PERSONAJE.md §3).</p>
+  <div class="grid" id="anims"></div>
+</section>
+
+<section id="colores">
+  <h2>Colores del cuerpo</h2>
+  <p class="lead">10 colores: primarios, secundarios y pasteles. Cambia el tono y se conservan el brillo y la textura del mochi.</p>
+  <img class="sheet" src="../personalizacion/colores.png" alt="Colores">
+</section>
+
+<section id="ojos">
+  <h2>Ojos</h2>
+  <p class="lead">6 estilos. Párpados, mirada y ojos cerrados funcionan con todos, así que todas las emociones sirven con cualquier ojo.</p>
+  <img class="sheet" src="../personalizacion/ojos.png" alt="Ojos">
+</section>
+
+<section id="bocas">
+  <h2>Bocas</h2>
+  <p class="lead">6 estilos. Todas las bocas siguen siendo un mismo contorno que se transforma, por eso los dientes, el colmillo, los labios y la lengua acompañan cada cambio de forma.</p>
+  <img class="sheet" src="../personalizacion/bocas.png" alt="Bocas">
+</section>
+
+<section id="tatuajes">
+  <h2>Tatuajes</h2>
+  <p class="lead">Tinta multiplicada sobre la piel (conserva textura y sombreado), con trazo irregular y un leve corrido. Se combinan: 1 patrón de cuerpo completo + hasta 3 diseños chicos.</p>
+  <h3>Patrones de cuerpo completo (7)</h3>
+  <p class="lead">Se desvanecen alrededor de la cara para que la expresión siempre se lea.</p>
+  <img class="sheet" src="../personalizacion/tatuajes_patrones.png" alt="Patrones">
+  <h3 style="margin-top:16px">Diseños chicos (19): código, clásicos y japoneses</h3>
+  <p class="lead">Van en 4 posiciones: panza derecha, panza izquierda, frente y costado.</p>
+  <img class="sheet" src="../personalizacion/tatuajes_flash.png" alt="Flash">
+  <h3 style="margin-top:16px">Combinaciones</h3>
+  <img class="sheet" src="../personalizacion/tatuajes_combinados.png" alt="Combinaciones">
+</section>
+
+<section id="accesorios">
+  <h2>Accesorios</h2>
+  <p class="lead">23 accesorios. Pueden salir del contorno del cuerpo y siguen su escala, altura y rotación.</p>
+  <h3>Para todos los días (7)</h3>
+  <img class="sheet" src="../personalizacion/accesorios_diario.png" alt="Accesorios diarios">
+  <h3 style="margin-top:16px">Divertidos (9)</h3>
+  <img class="sheet" src="../personalizacion/accesorios_divertido.png" alt="Accesorios divertidos">
+  <h3 style="margin-top:16px">De temporada (7)</h3>
+  <p class="lead">Se pueden poner solos en su fecha: Navidad, Halloween, San Valentín, verano, cumpleaños y graduación.</p>
+  <img class="sheet" src="../personalizacion/accesorios_temporada.png" alt="Accesorios de temporada">
+</section>
+
+<section id="presets">
+  <h2>Presets de ejemplo</h2>
+  <p class="lead">Combinaciones de color, ojos, boca, tatuaje y accesorio, animadas con la emoción "hablando".</p>
+  <div class="grid" id="presetGrid"></div>
+</section>
+
+<script>
+  const anims = [
+    ["aparecer", "Aparece", "Una vez · cae desde arriba como superhéroe"],
+    ["atento", "Detectó \"Luchi\"", "Una vez · encadena a escuchando"],
+    ["escuchando", "Escuchando la orden", "Loop · las ondas siguen el micrófono"],
+    ["pensando", "Procesando", "Loop · solo si tarda más de 400 ms"],
+    ["hablando", "Respondiendo en voz", "Loop · la boca sigue el audio"],
+    ["feliz", "Acción hecha", "Una vez · luego se esconde"],
+    ["guino", "Acción hecha (variante)", "Una vez · 10 % de las veces"],
+    ["pregunta", "Necesita aclarar", "Loop · espera tu respuesta"],
+    ["apenado", "Error o no entendió", "Una vez · explica en voz"],
+    ["cansado", "Tarde a la noche", "Una vez · bosteza al terminar"],
+    ["mareado", "Muchas órdenes a la vez", "Una vez · 3 o más en pocos segundos"],
+    ["enojado", "Le dicen algo feo", "Una vez · easter egg, se le pasa rápido"],
+    ["dormido", "Micrófono silenciado", "Loop · no escucha"],
+    ["amor", "\"Gracias, Luchi\"", "Una vez · easter egg"],
+    ["idle", "Modo compañía", "Loop · opcional"],
+    ["esconderse", "Se esconde", "Una vez · mira a todos lados y salta hacia arriba"],
+  ];
+  const presets = [
+    ["clasica", "Clásica", "rosa · brillo · línea"],
+    ["dev", "Dev", "azul · punto · colmillo · circuito + </> · lentes"],
+    ["gamer", "Gamer", "violeta · estrellados · dientes · sudo + rayo · auriculares"],
+    ["sakura", "Sakura", "rosa · pestañas · labios · rama de sakura · flor"],
+    ["brote", "Brote", "menta · brillo · lengua · café + onigiri · brote"],
+    ["reina", "Reina", "amarillo · gatunos · colmillo · llamas + estrella · corona"],
+    ["rockera", "Rockera", "nube · óvalo · gruesa · tribal + calaverita + Mamá"],
+    ["ninja", "Ninja", "celeste · punto · línea · olas · hachimaki"],
+    ["fiesta", "Fiesta", "naranja · estrellados · lengua · estrella · gorro de fiesta"],
+  ];
+  const card = (src, title, note) =>
+    `<div class="card"><div class="stage"><img src="${src}" alt="${title}" loading="lazy"></div><h3>${title}</h3><p>${note}</p></div>`;
+  document.getElementById("anims").innerHTML = anims.map(([f, t, n]) => card(`${f}.webp`, t, `${f} · ${n}`)).join("");
+  document.getElementById("presetGrid").innerHTML = presets.map(([f, t, n]) => card(`../personalizacion/presets/${f}.webp`, t, n)).join("");
+  function toggle(id, apply) {
+    const g = document.getElementById(id);
+    g.addEventListener("click", e => {
+      const b = e.target.closest("button"); if (!b) return;
+      g.querySelectorAll("button").forEach(x => x.classList.toggle("on", x === b));
+      apply(b.dataset.v);
+    });
+  }
+  toggle("bg", v => { document.body.classList.remove("light", "dark", "wall"); document.body.classList.add(v); });
+  toggle("size", v => document.body.classList.toggle("mini", v === "mini"));
+</script>
+</body>
+</html>
