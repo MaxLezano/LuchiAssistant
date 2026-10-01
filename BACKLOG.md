@@ -9,7 +9,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 > Cuándo está lista: HA ve las luces y la tele; el detector reconoce "Luchi" con < 1 falso positivo por hora de TV de fondo
 
 - [x] [#1](https://github.com/MaxLezano/LuchiAssistant/issues/1) **F0-01** Build Tools de Visual Studio (C++) + Rust MSVC
-- [ ] [#2](https://github.com/MaxLezano/LuchiAssistant/issues/2) **F0-02** Ollama + qwen3:8b con modelos en D:/E:
+- [x] [#2](https://github.com/MaxLezano/LuchiAssistant/issues/2) **F0-02** Ollama + qwen3:8b con modelos en D:/E:
 - [ ] [#3](https://github.com/MaxLezano/LuchiAssistant/issues/3) **F0-03** Python 3.12 con uv
 - [ ] [#4](https://github.com/MaxLezano/LuchiAssistant/issues/4) **F0-04** ffmpeg y yt-dlp
 - [ ] [#5](https://github.com/MaxLezano/LuchiAssistant/issues/5) **F0-05** VM de Home Assistant OS en Hyper-V
