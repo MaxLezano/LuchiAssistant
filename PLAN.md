@@ -531,6 +531,9 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 | Recordatorios con la PC apagada | No se puede avisar en el momento: se avisa al prender y se ofrece despertar de la suspensión. Queda claro en la pantalla de Recordatorios |
 | Verificación de la app en Google | Con un permiso no sensible alcanza la verificación básica; mientras tanto la app funciona en modo de prueba para pocos usuarios |
 | "Yo / Otros" no distingue a cada participante | Suficiente para el uso previsto. Identificar a cada persona requeriría modelos extra; se evalúa solo si hace falta |
+| La VM de Hyper-V no existe en Windows Home y exige reiniciar | En la PC de desarrollo se mantiene (D8). Antes de distribuir se evalúa VirtualBox, conectarse a un HA existente o usar Luchi sin casa ([docs/PRODUCTO.md](docs/PRODUCTO.md) §4, F13) |
+| Luchi sobrecarga PCs más modestas | Perfiles de hardware, descarga de modelos tras inactividad, modo juego y límites en segundo plano ([docs/PRODUCTO.md](docs/PRODUCTO.md) §3) |
+| Licencias para uso comercial | Revisar modelos, voces de Piper, LLM y librerías antes de publicar (F13) |
 | Portar el personaje de Python a TypeScript | El prototipo es la especificación ejecutable: tests visuales que comparan el renderer TS con frames exportados del prototipo (diferencia por píxel con tolerancia), más el "laboratorio del personaje" (propuesta 8) para revisarlo a ojo |
 
 ---
@@ -577,6 +580,9 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 | D21 | Recordatorios locales: aviso al prender si vencieron con la PC apagada; despertar de la suspensión opcional | Sin servicios externos no hay forma de avisar con la PC apagada |
 | D22 | Correcciones por voz además del botón, con deshacer | Corregir tiene que ser tan fácil como pedir; cada corrección mejora el set de evaluación |
 | D23 | SQLite para los datos locales | Un archivo, sin servidor, fácil de respaldar y sincronizar |
+| D24 | **Integraciones oficiales de Home Assistant por defecto**, aunque usen la nube del fabricante (por ejemplo, Tuya oficial en lugar de Tuya Local). Lo local queda como opción avanzada | Luchi se va a comercializar: lo oficial viene con HA, lo mantiene su equipo, es lo más compatible y lo más fácil para el usuario. Luchi le habla siempre a HA, así que el código no cambia según la integración. Voz, IA y datos personales siguen sin salir de la PC ([docs/PRODUCTO.md](docs/PRODUCTO.md) §6) |
+| D25 | Luchi se distribuye como producto: web de presentación + instalador para Windows | Pedido del usuario. Agrega requisitos de instalación sin conocimientos técnicos, perfiles de hardware y compatibilidad con Windows Home ([docs/PRODUCTO.md](docs/PRODUCTO.md)) |
+| D26 | Perfiles de hardware (completo, equilibrado, liviano) | Que funcione en PCs sin una GPU grande y que en reposo casi no consuma ([docs/PRODUCTO.md](docs/PRODUCTO.md) §3) |
 
 ---
 

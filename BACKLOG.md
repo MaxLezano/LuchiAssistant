@@ -22,6 +22,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [ ] [#12](https://github.com/MaxLezano/LuchiAssistant/issues/12) **F0-12** Spike wake word: herramienta de prueba y medición
 - [ ] [#13](https://github.com/MaxLezano/LuchiAssistant/issues/13) **F0-13** Spike wake word: medir con el usuario 🙋
 - [ ] [#14](https://github.com/MaxLezano/LuchiAssistant/issues/14) **F0-14** Cierre de F0 🙋
+- [x] [#105](https://github.com/MaxLezano/LuchiAssistant/issues/105) **F0-15** Documentar la visión de producto y distribución
 
 ## F1 · Escucha y personaje
 
@@ -165,3 +166,15 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [ ] [#95](https://github.com/MaxLezano/LuchiAssistant/issues/95) **F12-05** Exportar/importar .luchi y copias locales
 - [ ] [#96](https://github.com/MaxLezano/LuchiAssistant/issues/96) **F12-06** Iniciar sesión con Google y sincronizar con Drive appDataFolder
 - [ ] [#97](https://github.com/MaxLezano/LuchiAssistant/issues/97) **F12-07** Cierre de F12 🙋
+
+## F13 · Producto y distribución
+
+> Cuándo está lista: un usuario nuevo entra a la web, descarga el instalador, lo instala como cualquier app de Windows y Luchi funciona en su PC sin exigirle más de lo que su hardware soporta
+
+- [ ] [#106](https://github.com/MaxLezano/LuchiAssistant/issues/106) **F13-01** Home Assistant en PCs de usuarios (Windows Home y Pro)
+- [ ] [#107](https://github.com/MaxLezano/LuchiAssistant/issues/107) **F13-02** Perfiles de hardware: detección y medición
+- [ ] [#108](https://github.com/MaxLezano/LuchiAssistant/issues/108) **F13-03** Instalador para usuarios sin conocimientos técnicos
+- [ ] [#109](https://github.com/MaxLezano/LuchiAssistant/issues/109) **F13-04** Revisión de licencias para uso comercial
+- [ ] [#110](https://github.com/MaxLezano/LuchiAssistant/issues/110) **F13-05** Firma de código y actualizaciones automáticas
+- [ ] [#112](https://github.com/MaxLezano/LuchiAssistant/issues/112) **F13-06** Web de presentación y descargas
+- [ ] [#111](https://github.com/MaxLezano/LuchiAssistant/issues/111) **F13-07** Cierre de F13 🙋
