@@ -14,7 +14,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [x] [#4](https://github.com/MaxLezano/LuchiAssistant/issues/4) **F0-04** ffmpeg y yt-dlp
 - [x] [#5](https://github.com/MaxLezano/LuchiAssistant/issues/5) **F0-05** VM de Home Assistant OS en Hyper-V
 - [x] [#6](https://github.com/MaxLezano/LuchiAssistant/issues/6) **F0-06** Onboarding de Home Assistant y token de larga duración 🙋
-- [ ] [#7](https://github.com/MaxLezano/LuchiAssistant/issues/7) **F0-07** Inventario de dispositivos de la casa 🙋
+- [x] [#7](https://github.com/MaxLezano/LuchiAssistant/issues/7) **F0-07** Inventario de dispositivos de la casa 🙋
 - [ ] [#8](https://github.com/MaxLezano/LuchiAssistant/issues/8) **F0-08** Integrar los dispositivos en Home Assistant 🙋
 - [ ] [#9](https://github.com/MaxLezano/LuchiAssistant/issues/9) **F0-09** Elegir la voz de Piper en español 🙋
 - [ ] [#10](https://github.com/MaxLezano/LuchiAssistant/issues/10) **F0-10** Spike wake word: generar muestras de "Luchi" y "Oye Luchi"

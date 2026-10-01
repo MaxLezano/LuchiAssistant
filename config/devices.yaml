@@ -1,0 +1,48 @@
+# Destinos, dispositivos y apodos de la casa (PLAN.md §3.4). Sin secretos.
+# Los entity_id definitivos se completan al integrar cada dispositivo en Home Assistant (F0-08).
+version: 1
+
+areas:
+  comedor: { nombre: Comedor, apodos: [comedor, living] }
+  habitacion_luz: { nombre: Habitación de Luz, apodos: [habitación de luz, cuarto de luz, pieza de luz] }
+  habitacion_principal: { nombre: Habitación principal, apodos: [habitación principal, mi habitación, mi cuarto, mi pieza] }
+
+# Destinos multimedia. "pc" siempre existe.
+destinos:
+  pc:
+    nombre: Esta PC
+    apodos: [acá, aquí, en la compu, en la pc]
+  tele_comedor:
+    nombre: Tele Comedor
+    area: comedor
+    marca: TCL
+    modelo: 55" Google TV
+    entidades:
+      media_player: media_player.tele_comedor          # Google Cast (detectada)
+      remote: null                                     # Android TV Remote (F0-08)
+    apodos: [tele, la tele, tele del comedor, televisor]
+  tele_luz:
+    nombre: Tele de Luz
+    area: habitacion_luz
+    marca: TCL
+    modelo: 43" Android TV
+    entidades: { media_player: null, remote: null }
+    apodos: [tele de luz, tele de la habitación de luz]
+  tele_habitacion:
+    nombre: Tele Habitación
+    area: habitacion_principal
+    marca: TCL
+    modelo: 50" Google TV
+    entidades:
+      media_player: media_player.tele_habitacion       # Google Cast (detectada)
+      remote: null                                     # Android TV Remote (F0-08)
+    apodos: [tele de la habitación, tele de mi habitación, tele de la habitación principal, tele del cuarto]
+
+# Destino de video cuando no se dice dónde.
+destino_por_defecto: pc
+
+luces:
+  luz_balcon:   { nombre: Luz Balcón,   area: comedor,        entidad: null, apodos: [balcón, luz del balcón] }
+  luz_comedor:  { nombre: Luz Comedor,  area: comedor,        entidad: null, apodos: [comedor, luz del comedor] }
+  luz_hab_luz:  { nombre: Habitación Luz, area: habitacion_luz, entidad: null, apodos: [habitación luz, luz de la habitación de luz, luz del cuarto de luz] }
+  luz_placard:  { nombre: Placard Luz,  area: habitacion_luz, entidad: null, apodos: [placard, placard luz, luz del placard] }
