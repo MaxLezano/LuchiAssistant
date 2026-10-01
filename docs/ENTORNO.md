@@ -51,3 +51,20 @@ Prueba de tool calling con `think: false` y temperatura 0 ([spikes/ollama](../sp
 | CTranslate2 (faster-whisper) | 4.8.2 con `nvidia-cublas-cu12` y `nvidia-cudnn-cu12` 9; en Windows hay que agregar sus carpetas `bin` al buscador de DLL |
 
 Verificación ([spikes/gpu](../spikes/gpu/)): `cd spikes/gpu && uv run python verificar.py` → Python 3.12, `torch.cuda.is_available() = True`, RTX 3080 con cuDNN 9.19, CTranslate2 ve 1 GPU con `float16` e `int8_float16`.
+
+## Audio y video
+
+| Herramienta | Versión | Instalación | Verificación |
+|---|---|---|---|
+| ffmpeg | 9.0.2 (build de gyan.dev, con `libmp3lame`) | `winget install Gyan.FFmpeg` | Mezcla de dos pistas (mono 48 kHz + estéreo) a `audio.mp3` de 128 kbps con `amix`: estéreo, 3,0 s |
+| yt-dlp | 2026.08.19 | `winget install yt-dlp.yt-dlp` (instala además Deno como intérprete de JavaScript y su propio ffmpeg) | `yt-dlp --get-id "ytsearch1:lofi hip hop radio"` devuelve el ID en ≈ 4 s |
+
+Comando de mezcla probado (base de F6):
+
+```bash
+ffmpeg -i mic.wav -i sistema.wav -filter_complex "[0:a]aformat=channel_layouts=stereo[a];[a][1:a]amix=inputs=2:normalize=0[m]" -map "[m]" -c:a libmp3lame -b:a 128k audio.mp3
+```
+
+> **Latencia de yt-dlp:** ≈ 4 s por búsqueda supera el objetivo de 2,5 s con LLM (PLAN.md §10). En F3 hay que mitigarlo: abrir la búsqueda de YouTube mientras se resuelve el ID, mantener un proceso caliente o usar la API interna de búsqueda de yt-dlp desde Python.
+>
+> Los PATH se agregan al usuario; las terminales abiertas antes de instalar no los ven hasta reiniciarlas.
