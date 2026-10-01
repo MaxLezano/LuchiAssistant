@@ -15,6 +15,7 @@ Asistente de voz que corre **100 % local** como app de Windows. Se despierta al 
 | [docs/PERSONAJE.md](docs/PERSONAJE.md) | Personaje, mapa estado de la app → emoción, reglas de interacción, personalización |
 | [docs/INTERFAZ.md](docs/INTERFAZ.md) | Cada pantalla, tokens visuales, estados de la isla, bandeja, barra lateral |
 | [assets/luchi/README.md](assets/luchi/README.md) | Capas del personaje, `catalogo.json` y **orden de composición** |
+| [docs/PRODUCTO.md](docs/PRODUCTO.md) | Luchi como producto: web, instalador, perfiles de hardware, Windows Home |
 
 Referencias visuales (abrir en el navegador):
 - `mockups/animaciones/visor.html`: las 16 emociones, catálogo de personalización y presets.
@@ -24,11 +25,12 @@ En los documentos, `§` significa "sección" (por ejemplo, §3.5 = sección 3.5)
 
 ## Reglas del proyecto
 
-1. **100 % gratis y 100 % local.** Nada de suscripciones, claves pagas, "free tiers", servicios en la nube ni APIs de terceros. Lo único que sale a internet es lo que el usuario pide (abrir YouTube, Netflix, una búsqueda). **Única excepción, opcional:** "Iniciar sesión con Google" para guardar preferencias en la carpeta oculta de la app en Drive (`drive.appdata`); sin sesión todo funciona y se guarda en la PC (PLAN.md §3.9). No extender esta excepción a otros servicios sin preguntar.
+1. **100 % gratis y 100 % local.** Nada de suscripciones, claves pagas, "free tiers", servicios en la nube ni APIs de terceros. La voz, la IA, las grabaciones y los datos personales nunca salen de la PC. Lo único que sale a internet es lo que el usuario pide (abrir YouTube, Netflix, una búsqueda). **Excepciones:** (a) opcional, "Iniciar sesión con Google" para guardar preferencias en la carpeta oculta de la app en Drive (`drive.appdata`); sin sesión todo funciona y se guarda en la PC (PLAN.md §3.9); (b) los dispositivos de la casa pueden usar la nube de su fabricante cuando es la **integración oficial de Home Assistant**, con aviso al usuario (D24). No extender las excepciones a otros servicios sin preguntar.
 2. **Solo voz.** Todo se tiene que poder hacer sin mirar la pantalla; lo importante siempre se dice también en voz.
 3. **El LLM interpreta, el código ejecuta.** El modelo solo elige herramienta y argumentos de una **lista blanca**. Nunca terminal, nunca borrar archivos, nunca instalar software. Suspender/apagar siempre con confirmación en voz.
 4. **Privacidad:** no se graba ni guarda audio antes de detectar "Luchi"; la isla está visible mientras escucha; grabar reuniones solo por orden explícita, con recordatorio de consentimiento e indicador visible; tokens en el Administrador de credenciales de Windows.
 5. **Rápido para lo frecuente:** router sin LLM para órdenes comunes (casa vía Home Assistant Assist, "pausa", volumen); el LLM es el fallback.
+6. **Es un producto.** Luchi se va a distribuir con una web y un instalador para Windows ([docs/PRODUCTO.md](docs/PRODUCTO.md)): pensar cada decisión para usuarios sin conocimientos técnicos, en Windows Home y Pro, y con hardware más modesto que el de desarrollo.
 
 ## Arquitectura y stack
 
