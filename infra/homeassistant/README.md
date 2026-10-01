@@ -24,3 +24,10 @@ Es idempotente: si se corta o ya existe algo, lo reutiliza y sigue. Al terminar 
 | Inicio | Arranca sola con Windows y se apaga ordenadamente con la PC |
 
 > Crear el switch externo corta la red de la PC unos segundos.
+
+## Resultado en esta PC (2026-10-01)
+
+- HAOS 18.3 creado y arrancado en ≈ 1 minuto; el núcleo quedó listo para el onboarding a los pocos minutos.
+- Dirección: **`http://homeassistant.local`** (IP actual `192.168.100.188` por DHCP, MAC `00:15:5D:64:17:00`). Conviene reservar esa IP en el router.
+- En esta versión el núcleo responde en el **puerto 80**; el 8123 devuelve `307` hacia el 80. La app usa la dirección base sin puerto.
+- Observador del Supervisor: `http://homeassistant.local:4357` (Supervisor conectado, soportado y sano).
