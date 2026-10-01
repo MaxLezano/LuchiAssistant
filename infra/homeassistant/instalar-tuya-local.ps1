@@ -1,4 +1,4 @@
-<#
+﻿<#
 .SYNOPSIS
   Instala (o actualiza) la integración Tuya Local en Home Assistant, sin HACS. Idempotente.
 
@@ -92,7 +92,8 @@ try {
 Paso "Reinicio"
 Supervisor "/addons/core_samba/stop" | Out-Null
 Write-Host "Samba apagado."
-Supervisor "/core/restart" | Out-Null
+# Home Assistant corta la conexión al reiniciarse, a veces antes de responder: no es un error.
+try { Supervisor "/core/restart" | Out-Null } catch { }
 Write-Host "Reiniciando Home Assistant..."
 $limite = (Get-Date).AddMinutes(5)
 Start-Sleep 15
