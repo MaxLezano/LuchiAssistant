@@ -81,7 +81,10 @@ def main():
         ok = mal = 0
         por_voz: dict = {}
         for wav in sorted(clase_dir.glob("*.wav")):
-            texto = transcribir(wav)
+            try:
+                texto = transcribir(wav)
+            except Exception:  # clip cortado (por ejemplo, si se interrumpió la generación)
+                texto = "ilegible"
             voz = wav.stem.split("_", 1)[1].rsplit("_", 1)[0]
             v = por_voz.setdefault(voz, [0, 0])
             if aceptar(clase, texto):

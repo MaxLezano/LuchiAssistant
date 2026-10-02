@@ -97,7 +97,28 @@ def descargar(datos: Path, archivo: str, ruta: str) -> Path:
 _cache: dict = {}
 
 
+def _un_hilo():
+    """Cada proceso usa 1 hilo de onnxruntime: con 14 procesos × 16 hilos la CPU se ahogaba (carga 260)."""
+    import onnxruntime as ort
+
+    if getattr(ort.InferenceSession, "_luchi", False):
+        return
+    original = ort.InferenceSession
+
+    class Sesion(original):
+        _luchi = True
+
+        def __init__(self, *args, sess_options=None, **kw):
+            sess_options = sess_options or ort.SessionOptions()
+            sess_options.intra_op_num_threads = 1
+            sess_options.inter_op_num_threads = 1
+            super().__init__(*args, sess_options=sess_options, **kw)
+
+    ort.InferenceSession = Sesion
+
+
 def _voz(path: str):
+    _un_hilo()
     from piper import PiperVoice  # import tardío: cada proceso carga sus voces
 
     if path not in _cache:
