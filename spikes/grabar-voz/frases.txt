@@ -170,3 +170,318 @@ Volví a prender la luz, perdón.
 Te leo el mensaje: llego en diez minutos.
 Escribí lo que me dictaste.
 Me voy a esconder un ratito. ¡Llamame si me necesitás!
+Prendí la luz de tu habitación.
+Apagué la luz del placard.
+La tele del comedor ya está prendida.
+Apagué la tele de la habitación.
+Subí el volumen de la tele.
+Bajé el volumen de la tele del comedor.
+Puse en pausa la película.
+Sigo con la película.
+Pasé a la canción siguiente.
+Volví a la canción anterior.
+Puse la película en pantalla completa.
+Abriendo Spotify.
+Abriendo el navegador.
+Cerré el juego.
+Ya cerré la ventana.
+Buscando recetas de panqueques.
+Te muestro los resultados en la pantalla.
+Encontré un video de dibujos animados.
+No pude abrir esa aplicación.
+No tengo permiso para hacer eso.
+Esa aplicación no está instalada.
+No encontré ninguna canción con ese nombre.
+La tele no responde. ¿Probamos de nuevo?
+Parece que no hay internet.
+Perdón, me equivoqué. Ya lo arreglo.
+Ya deshice lo último que hice.
+¿Querés que lo haga de nuevo?
+Te escucho.
+Decime.
+¿Sí?
+Acá estoy.
+Un segundito.
+Dame un momento que lo busco.
+Estoy pensando.
+Ya casi está.
+¡Listo! Ya lo hice.
+¡Hecho!
+Perfecto.
+Buenísimo.
+De nada, para eso estoy.
+¡Me encanta ayudarte!
+¡Hasta luego!
+Nos vemos más tarde.
+Me voy a dormir un ratito.
+Micrófono apagado. No escucho nada.
+Micrófono prendido. Ya te escucho otra vez.
+Empiezo a grabar ahora.
+Dejé de grabar.
+La grabación duró media hora.
+Traduje la reunión al inglés.
+Te hice un resumen de la reunión.
+Tenés un recordatorio: llamar a la abuela.
+Pasaron diez minutos.
+¡Se terminó el tiempo!
+Pospuse el recordatorio cinco minutos.
+Borré el recordatorio.
+Mañana a las nueve te aviso.
+Tenés tres recordatorios para hoy.
+No tenés nada pendiente para mañana.
+Activé el modo cine.
+Buenas noches. Apagué todas las luces de la casa.
+Buen día. Prendí la luz del comedor.
+La temperatura afuera es de veinte grados.
+Hoy va a hacer calor, máxima de treinta y dos.
+Esta noche puede llover.
+Son las tres y cuarto de la tarde.
+Son las once menos diez de la mañana.
+Es la medianoche.
+Hoy es sábado.
+Mañana es feriado.
+Faltan cinco días para tu cumpleaños.
+El resultado es cuarenta y dos.
+Doce por doce es ciento cuarenta y cuatro.
+La capital de Argentina es Buenos Aires.
+Un año tiene trescientos sesenta y cinco días.
+La ballena azul es el animal más grande del planeta.
+El agua hierve a cien grados.
+La luna tarda casi un mes en dar la vuelta a la Tierra.
+Las arañas tienen ocho patas.
+Los pulpos tienen tres corazones.
+Hay que tomar mucha agua todos los días.
+¿Querés que te cuente un chiste?
+¿Qué le dijo una uva verde a una uva morada? ¡Respirá, respirá!
+¿Por qué el libro de matemática está triste? Porque tiene muchos problemas.
+¡Qué buena pregunta!
+No sé la respuesta, pero puedo buscarla.
+Esa no me la sé.
+Mmm, dejame pensar.
+¡Ja, ja, ja! Me hiciste reír.
+¡Uy, no!
+¡Qué lindo!
+¡Qué rico!
+¡Bravo!
+¡Felicitaciones!
+¡Vamos, vos podés!
+Tranqui, no pasa nada.
+¿Estás bien?
+¿Necesitás algo más?
+Avisame si necesitás ayuda.
+Cuando quieras, acá estoy.
+Mi mamá me lleva a la escuela todos los días.
+En el recreo jugamos a la mancha.
+La seño nos dio tarea para el lunes.
+Me saqué un diez en la prueba de lengua.
+Mi mejor amiga se sienta al lado mío.
+Hoy en educación física saltamos la soga.
+En música aprendimos una canción nueva.
+Llevé una manzana para la merienda.
+Me olvidé la cartuchera en casa.
+Tengo que forrar los cuadernos.
+El acto de la escuela es el viernes.
+Me disfracé de mariposa para el carnaval.
+La bandera argentina es celeste y blanca.
+El veinticinco de mayo comemos locro.
+En invierno tomamos sopa calentita.
+Mi abuelo toma mate todas las mañanas.
+La pava está en la hornalla.
+Las medialunas de manteca son mis favoritas.
+Comimos ñoquis el veintinueve.
+El alfajor de maicena es riquísimo.
+Me gusta el dulce de leche en todo.
+Hicimos una chocotorta para el postre.
+La pizza de muzzarella es la mejor.
+Las empanadas de carne son jugosas.
+El panqueque con dulce de leche es lo más.
+¿Vamos a la heladería de la esquina?
+Pedí un cucurucho de frutilla y limón.
+El kiosco de la vuelta vende caramelos.
+Mi gata se llama Michi y es naranja.
+Mi perro mueve la cola cuando llego.
+El canario canta todas las mañanas.
+Los conejos tienen las orejas largas.
+El caballo corre muy rápido por el campo.
+Las gallinas ponen huevos.
+El pingüino vive donde hace mucho frío.
+El cocodrilo tiene los dientes filosos.
+La mariposa tiene alas de colores.
+El colibrí mueve las alas muy rápido.
+La abeja hace miel.
+El zorro es astuto y rápido.
+El oso panda come bambú.
+El koala duerme casi todo el día.
+El camello guarda agua en su joroba.
+Los delfines son muy inteligentes.
+El tiburón nada en el fondo del mar.
+Las ranas saltan de hoja en hoja.
+El yacaré vive en los esteros.
+El hornero hace su casa de barro.
+El cóndor vuela muy alto en la montaña.
+Fuimos de vacaciones a Córdoba.
+En Bariloche hay mucha nieve en invierno.
+Las cataratas del Iguazú son impresionantes.
+En Mendoza hay muchos viñedos.
+El glaciar Perito Moreno es gigante.
+La playa de Mar del Plata estaba llena.
+Subimos a la montaña y vimos todo el valle.
+Hicimos una carpa en el patio.
+Armamos un castillo de arena.
+Juntamos caracoles en la orilla.
+El agua del mar estaba helada.
+Me puse protector solar para no quemarme.
+El viaje en auto fue larguísimo.
+Vimos las estrellas acostados en el pasto.
+La fogata hacía mucho calor.
+Hoy hace un día hermoso.
+El viento sopla fuerte desde el sur.
+Se largó a llover de golpe.
+Cayó granizo y sonaba en el techo.
+Después de la lluvia salió el arco iris.
+Hace tanto frío que se congelaron los charcos.
+La niebla no deja ver nada.
+Está despejado y se ven todas las estrellas.
+Hoy hay luna llena.
+El otoño tiene hojas amarillas y naranjas.
+En primavera florecen los jazmines.
+El verano es para la pileta.
+El invierno es para quedarse adentro con mantas.
+Me abrigué con bufanda, gorro y guantes.
+Mis botas de lluvia son amarillas.
+El paraguas se dio vuelta con el viento.
+¿Jugamos a la pelota en el parque?
+Me subí a la hamaca más alta.
+El tobogán estaba calentito por el sol.
+Aprendí a andar en bici sin rueditas.
+Hicimos una carrera y gané yo.
+Jugamos a la escondida y nadie me encontró.
+Armé una torre con bloques de colores.
+Pinté un paisaje con acuarelas.
+Hice una pulsera con mostacillas.
+Me gusta dibujar animales.
+Recorté figuras y las pegué en una cartulina.
+Estoy leyendo un libro de aventuras.
+El cuento terminaba con un final feliz.
+La heroína salvó al pueblo del dragón.
+El mago hizo desaparecer la galera.
+La bruja tenía una escoba voladora.
+El robot quería tener un amigo.
+El astronauta viajó hasta Marte.
+El pirata encontró un cofre lleno de oro.
+La sirena cantaba en el fondo del mar.
+El unicornio tenía la crin de colores.
+El hada me concedió tres deseos.
+Mi primer deseo es tener un perro.
+Mi segundo deseo es volar como un pájaro.
+Mi tercer deseo es que todos sean felices.
+Había una vez un gato que quería ser astronauta.
+Todas las noches miraba la luna desde el techo.
+Un día construyó un cohete con cajas de cartón.
+Despegó con un ruido enorme y llegó hasta las nubes.
+Desde ahí arriba la ciudad parecía un juguete.
+Al final volvió a casa justo para la cena.
+Y colorín colorado, este cuento se ha terminado.
+Me lavo las manos antes de comer.
+Ordené mis juguetes en la caja.
+Hice la cama solita.
+Ayudé a poner la mesa.
+Le di de comer al perro.
+Regué las plantas de la ventana.
+Guardé la ropa en el placard.
+Me cepillé el pelo y me hice una trenza.
+Me puse el pijama de estrellas.
+¿Me leés un cuento antes de dormir?
+Dejá la luz prendida un ratito, por favor.
+Soñé que volaba sobre el mar.
+Me desperté temprano y todavía era de noche.
+Hoy me levanté con muchas ganas de jugar.
+Desayuné leche con cereales.
+Me tomé un jugo de naranja exprimido.
+Comí tostadas con manteca y mermelada.
+Mi hermano se comió todas las galletitas.
+Mi papá arregla todo lo que se rompe.
+Mi tía vive en otra provincia.
+Mi prima tiene la misma edad que yo.
+Mis abuelos tienen una casa con un jardín enorme.
+Te quiero mucho.
+Gracias por todo.
+Perdón por la demora.
+Con permiso.
+Por favor, ¿me pasás la sal?
+¿Me das un abrazo?
+¡Feliz Navidad!
+¡Feliz año nuevo!
+¡Feliz día del niño!
+Uno, dos, tres, ¡ya!
+Trece, catorce, quince, dieciséis, diecisiete.
+Veinte, treinta, cuarenta, cincuenta, sesenta.
+Setenta, ochenta, noventa, cien.
+Mil, dos mil, un millón.
+Primero, segundo, tercero, cuarto, quinto.
+La mitad de diez es cinco.
+El doble de seis es doce.
+Tres tristes tigres tragaban trigo en un trigal.
+Pablito clavó un clavito, ¿qué clavito clavó Pablito?
+Erre con erre cigarro, erre con erre barril.
+Rápido ruedan los carros cargados de azúcar del ferrocarril.
+La lluvia llena la calle de charcos.
+El yuyo crece en el jardín.
+La llave quedó en la puerta.
+El gallo canta al amanecer.
+La cigüeña llegó volando.
+El queso tiene agujeros.
+El kiwi es verde por dentro.
+El xilofón suena muy lindo.
+La zanahoria es naranja y crocante.
+El jabón tiene olor a jazmín.
+El hielo se derrite con el sol.
+El huevo frito tiene la yema amarilla.
+Tengo hipo y no se me va.
+¿Me repetís lo que dijiste?
+No te escuché bien.
+Hablá un poquito más fuerte.
+¿Podés hablar más despacio?
+Ahora sí te entendí.
+¿Querés que lo apague o que lo deje prendido?
+¿En la tele o en la compu?
+¿En qué habitación?
+¿A qué hora te aviso?
+¿Cuántos minutos?
+¿Cómo se llama la canción?
+¿Qué película querés ver?
+¿Querés escuchar música tranquila o movida?
+Elegí vos.
+Como prefieras.
+Me parece una gran idea.
+No estoy segura, ¿me lo explicás de otra forma?
+Eso todavía no lo sé hacer, pero estoy aprendiendo.
+¿Querés que lo recuerde para la próxima?
+Ya me lo acuerdo.
+Lo anoté en el historial.
+Hoy hiciste muchas cosas. ¡Bien ahí!
+Llevamos un rato largo con la compu. ¿Hacemos una pausa?
+Acordate de tomar agua.
+Es hora de cenar.
+Es hora de bañarse.
+Es hora de ir a la cama.
+Que tengas un lindo día.
+Que te diviertas mucho.
+Que te vaya bien en la prueba.
+¡Suerte!
+Te extrañé.
+¡Qué bueno verte!
+¿Cómo te fue hoy?
+Contame qué hiciste.
+¿Querés jugar a las adivinanzas?
+Tiene agujas pero no pincha. ¿Qué es? ¡El reloj!
+Vuela sin alas, silba sin boca. ¿Qué es? ¡El viento!
+Cuanto más le sacás, más grande se hace. ¡Un pozo!
+¡Adivinaste!
+Casi, probá otra vez.
+Te doy una pista.
+La respuesta correcta es la segunda.
+Ganaste tres puntos.
+Vamos empatados.
+¡Último intento!
+Se terminó el juego. ¡Gracias por jugar conmigo!
