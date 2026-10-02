@@ -68,3 +68,12 @@ ffmpeg -i mic.wav -i sistema.wav -filter_complex "[0:a]aformat=channel_layouts=s
 > **Latencia de yt-dlp:** ≈ 4 s por búsqueda supera el objetivo de 2,5 s con LLM (PLAN.md §10). En F3 hay que mitigarlo: abrir la búsqueda de YouTube mientras se resuelve el ID, mantener un proceso caliente o usar la API interna de búsqueda de yt-dlp desde Python.
 >
 > Los PATH se agregan al usuario; las terminales abiertas antes de instalar no los ven hasta reiniciarlas.
+
+## Voz (Piper)
+
+| Qué | Valor |
+|---|---|
+| Voz elegida | **es_AR-daniela-high** (provisoria hasta F9), en `E:\Luchi\models\piper` |
+| Velocidad | RTF 0,22 en CPU; "Listo." en ≈ 90 ms |
+| Nombres en inglés | Fonemas de espeak `en-us` insertados con `[[ ]]` ([spikes/piper](../spikes/piper/)) |
+| Motor | `piper-tts` 1.8 en el spike (**GPL-3.0**); para el producto se evalúa sherpa-onnx (Apache 2.0) en F2 |
