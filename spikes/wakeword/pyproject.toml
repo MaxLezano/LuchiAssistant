@@ -1,0 +1,29 @@
+[project]
+name = "spike-wakeword"
+version = "0.1.0"
+description = "Spike F0-10..F0-13: detector propio de 'Luchi' (D29). Se entrena en WSL Ubuntu."
+requires-python = "==3.12.*"
+dependencies = [
+    "torch>=2.7",
+    "torchaudio>=2.7",
+    "numpy>=1.26",
+    "soundfile>=0.12",
+    "scipy>=1.11",
+    "piper-tts>=1.8",   # solo desarrollo: genera muestras sintéticas, no se distribuye (GPL)
+    "onnx>=1.16",
+    "onnxruntime>=1.18",
+    "pyyaml>=6",
+    "tqdm>=4.66",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu128" }
+torchaudio = { index = "pytorch-cu128" }
+
+[[tool.uv.index]]
+name = "pytorch-cu128"
+url = "https://download.pytorch.org/whl/cu128"
+explicit = true
