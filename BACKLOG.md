@@ -16,7 +16,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [x] [#6](https://github.com/MaxLezano/LuchiAssistant/issues/6) **F0-06** Onboarding de Home Assistant y token de larga duración 🙋
 - [x] [#7](https://github.com/MaxLezano/LuchiAssistant/issues/7) **F0-07** Inventario de dispositivos de la casa 🙋
 - [x] [#8](https://github.com/MaxLezano/LuchiAssistant/issues/8) **F0-08** Integrar los dispositivos en Home Assistant 🙋
-- [ ] [#9](https://github.com/MaxLezano/LuchiAssistant/issues/9) **F0-09** Elegir la voz de Piper en español 🙋
+- [x] [#9](https://github.com/MaxLezano/LuchiAssistant/issues/9) **F0-09** Elegir la voz de Piper en español 🙋
 - [ ] [#10](https://github.com/MaxLezano/LuchiAssistant/issues/10) **F0-10** Spike wake word: generar muestras de "Luchi" y "Oye Luchi"
 - [ ] [#11](https://github.com/MaxLezano/LuchiAssistant/issues/11) **F0-11** Spike wake word: entrenar los modelos
 - [ ] [#12](https://github.com/MaxLezano/LuchiAssistant/issues/12) **F0-12** Spike wake word: herramienta de prueba y medición
