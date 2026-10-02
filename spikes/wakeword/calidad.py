@@ -3,9 +3,12 @@
 Cada clip se transcribe en español, sin prompt (un prompt con "Luchi" haría aceptar audios malos).
 - luchi / oye_luchi: se acepta solo si la transcripción es la frase esperada.
 - adversarial: se descarta si suena a "Luchi" (sería un positivo disfrazado de negativo).
-Los clips rechazados se mueven a <datos>/rechazados/ para poder escucharlos.
+Los clips rechazados se mueven a <datos>/rechazados/ para poder escucharlos, y los aceptados quedan
+listados en clips/<clase>/<split>/aceptados.txt (entrenar.py usa solo esos si el archivo existe).
 
-Uso (en WSL):  python calidad.py --datos ~/luchi-wakeword/data [--muestra]
+Uso (en WSL):  python calidad.py --datos ~/luchi-wakeword/data [--clases luchi oye_luchi] [--maximo 25000] [--muestra]
+Medido (F0-10): solo ~0,3 % de los negativos parecidos suena a "Luchi", así que no hace falta revisarlos;
+Whisper revisa ~10 clips/s, por eso los positivos de entrenamiento se revisan hasta --maximo por clase.
 """
 import argparse
 import ctypes
@@ -54,7 +57,7 @@ def modelo():
     if _modelo is None:
         from faster_whisper import WhisperModel
 
-        _modelo = WhisperModel("large-v3-turbo", device="cuda", compute_type="float16")
+        _modelo = WhisperModel("large-v3-turbo", device="cuda", compute_type="int8_float16")
     return _modelo
 
 
@@ -73,14 +76,27 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--datos", type=Path, required=True)
     ap.add_argument("--muestra", action="store_true")
+    ap.add_argument("--clases", nargs="+", default=["luchi", "oye_luchi", "adversarial"])
+    ap.add_argument("--maximo", type=int, default=0, help="máximo de clips de train por clase (0 = todos)")
     args = ap.parse_args()
     datos = args.datos.expanduser() / ("muestra" if args.muestra else "")
     reporte = {}
+    import random
+
     for clase_dir in sorted((datos / "clips").glob("*/*")):
         clase, split = clase_dir.parent.name, clase_dir.name
+        if clase not in args.clases:
+            continue
         ok = mal = 0
         por_voz: dict = {}
-        for wav in sorted(clase_dir.glob("*.wav")):
+        aceptados = []
+        wavs = sorted(clase_dir.glob("*.wav"))
+        if split == "train" and args.maximo:
+            random.Random(0).shuffle(wavs)
+            wavs = wavs[: args.maximo]
+        for n, wav in enumerate(wavs, 1):
+            if n % 2500 == 0:
+                print(f"  {clase}/{split}: {n}/{len(wavs)}", flush=True)
             try:
                 texto = transcribir(wav)
             except Exception:  # clip cortado (por ejemplo, si se interrumpió la generación)
@@ -89,15 +105,20 @@ def main():
             v = por_voz.setdefault(voz, [0, 0])
             if aceptar(clase, texto):
                 ok += 1; v[0] += 1
+                aceptados.append(wav.name)
             else:
                 mal += 1; v[1] += 1
                 dest = datos / "rechazados" / clase / split
                 dest.mkdir(parents=True, exist_ok=True)
                 shutil.move(str(wav), dest / f"{wav.stem}__{normalizar(texto)[:40].replace(' ', '-')}.wav")
+        (clase_dir / "aceptados.txt").write_text("\n".join(aceptados) + "\n")
         reporte[f"{clase}/{split}"] = {"aceptados": ok, "rechazados": mal,
                                        "por_voz": {k: f"{a}/{a + b}" for k, (a, b) in sorted(por_voz.items())}}
         print(f"{clase}/{split}: {ok} aceptados, {mal} rechazados · {reporte[f'{clase}/{split}']['por_voz']}", flush=True)
-    (datos / "clips" / "calidad.json").write_text(json.dumps(reporte, indent=2, ensure_ascii=False))
+    previo = datos / "clips" / "calidad.json"
+    total = json.loads(previo.read_text()) if previo.exists() else {}
+    total.update(reporte)
+    previo.write_text(json.dumps(total, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":
