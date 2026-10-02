@@ -17,12 +17,13 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [x] [#7](https://github.com/MaxLezano/LuchiAssistant/issues/7) **F0-07** Inventario de dispositivos de la casa 🙋
 - [x] [#8](https://github.com/MaxLezano/LuchiAssistant/issues/8) **F0-08** Integrar los dispositivos en Home Assistant 🙋
 - [x] [#9](https://github.com/MaxLezano/LuchiAssistant/issues/9) **F0-09** Elegir la voz de Piper en español 🙋
-- [ ] [#10](https://github.com/MaxLezano/LuchiAssistant/issues/10) **F0-10** Spike wake word: generar muestras de "Luchi" y "Oye Luchi"
-- [ ] [#11](https://github.com/MaxLezano/LuchiAssistant/issues/11) **F0-11** Spike wake word: entrenar los modelos
-- [ ] [#12](https://github.com/MaxLezano/LuchiAssistant/issues/12) **F0-12** Spike wake word: herramienta de prueba y medición
-- [ ] [#13](https://github.com/MaxLezano/LuchiAssistant/issues/13) **F0-13** Spike wake word: medir con el usuario 🙋
+- [ ] [#10](https://github.com/MaxLezano/LuchiAssistant/issues/10) **F0-10** Detector propio: generar muestras de "Luchi" y "Oye Luchi"
+- [ ] [#11](https://github.com/MaxLezano/LuchiAssistant/issues/11) **F0-11** Detector propio: entrenar los modelos
+- [ ] [#12](https://github.com/MaxLezano/LuchiAssistant/issues/12) **F0-12** Detector propio: herramienta de prueba y medición
+- [ ] [#13](https://github.com/MaxLezano/LuchiAssistant/issues/13) **F0-13** Detector propio: medir con el usuario 🙋
 - [ ] [#14](https://github.com/MaxLezano/LuchiAssistant/issues/14) **F0-14** Cierre de F0 🙋
 - [x] [#105](https://github.com/MaxLezano/LuchiAssistant/issues/105) **F0-15** Documentar la visión de producto y distribución
+- [x] [#116](https://github.com/MaxLezano/LuchiAssistant/issues/116) **F0-16** Principio de desarrollo propio y registro de licencias
 
 ## F1 · Escucha y personaje
 
@@ -53,7 +54,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 
 > Cuándo está lista: "Luchi, prendé la luz del comedor" funciona y Luchi contesta "Listo"
 
-- [ ] [#35](https://github.com/MaxLezano/LuchiAssistant/issues/35) **F2-01** Piper TTS en luchi-voice con amplitud en vivo
+- [ ] [#35](https://github.com/MaxLezano/LuchiAssistant/issues/35) **F2-01** TTS propio en luchi-voice (fonemizador + VITS en onnxruntime) con amplitud en vivo
 - [ ] [#36](https://github.com/MaxLezano/LuchiAssistant/issues/36) **F2-02** HomePort: Home Assistant Assist + REST
 - [ ] [#37](https://github.com/MaxLezano/LuchiAssistant/issues/37) **F2-03** Router rápido sin LLM y `home_command`
 - [ ] [#38](https://github.com/MaxLezano/LuchiAssistant/issues/38) **F2-04** Emociones: hablando, feliz, guiño, apenado
@@ -133,9 +134,9 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 
 > Cuándo está lista: Luchi habla con su voz
 
-- [ ] [#80](https://github.com/MaxLezano/LuchiAssistant/issues/80) **F9-01** Evaluar motores de clonación de voz locales
+- [ ] [#80](https://github.com/MaxLezano/LuchiAssistant/issues/80) **F9-01** Evaluar cómo entrenar la voz propia de Luchi
 - [ ] [#81](https://github.com/MaxLezano/LuchiAssistant/issues/81) **F9-02** Grabación de datos de voz 🙋
-- [ ] [#82](https://github.com/MaxLezano/LuchiAssistant/issues/82) **F9-03** Integrar la voz clonada en TextToSpeechPort
+- [ ] [#82](https://github.com/MaxLezano/LuchiAssistant/issues/82) **F9-03** Entrenar e integrar la voz propia en TextToSpeechPort
 - [ ] [#83](https://github.com/MaxLezano/LuchiAssistant/issues/83) **F9-04** Cierre de F9 🙋
 
 ## F10 · Toda la casa (opcional)
