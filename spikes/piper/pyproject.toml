@@ -1,0 +1,9 @@
+[project]
+name = "spike-piper"
+version = "0.1.0"
+description = "Spike F0-09: comparar voces de Piper en español para Luchi"
+requires-python = "==3.12.*"
+dependencies = ["piper-tts>=1.8"]
+
+[tool.uv]
+package = false
