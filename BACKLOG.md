@@ -18,7 +18,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [x] [#8](https://github.com/MaxLezano/LuchiAssistant/issues/8) **F0-08** Integrar los dispositivos en Home Assistant 🙋
 - [x] [#9](https://github.com/MaxLezano/LuchiAssistant/issues/9) **F0-09** Elegir la voz de Piper en español 🙋
 - [x] [#10](https://github.com/MaxLezano/LuchiAssistant/issues/10) **F0-10** Detector propio: generar muestras de "Luchi" y "Oye Luchi"
-- [ ] [#11](https://github.com/MaxLezano/LuchiAssistant/issues/11) **F0-11** Detector propio: entrenar los modelos
+- [x] [#11](https://github.com/MaxLezano/LuchiAssistant/issues/11) **F0-11** Detector propio: entrenar los modelos
 - [ ] [#12](https://github.com/MaxLezano/LuchiAssistant/issues/12) **F0-12** Detector propio: herramienta de prueba y medición
 - [ ] [#13](https://github.com/MaxLezano/LuchiAssistant/issues/13) **F0-13** Detector propio: medir con el usuario 🙋
 - [ ] [#14](https://github.com/MaxLezano/LuchiAssistant/issues/14) **F0-14** Cierre de F0 🙋

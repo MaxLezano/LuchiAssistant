@@ -56,3 +56,16 @@ Escucha del usuario sobre una muestra de 48 clips, y medición con Whisper sobre
 | Negativos generales | — | — | **496 h** | 41 h |
 
 Whisper large-v3-turbo revisa ~9 clips/s en esta PC (probado uno a uno, por lotes, en float16 e int8): por eso se revisa una parte de los positivos. Los rechazados quedan en `data/rechazados/` para escucharlos.
+
+## Entrenamiento (F0-11)
+
+`python entrenar.py --datos $D [--real-train] [--pasos 30000]` → `modelos/<versión>/detector.onnx` (289 KB, 73 mil parámetros) + `reporte.json`. 30.000 pasos ≈ 30 min en la RTX 3080. Las versiones entrenadas se copian a `E:\Luchi\models\detector\<versión>\` (fuera de git).
+
+| Versión | Datos | "Luchi" real (frases no vistas) | "Oye Luchi" real | Real que no es "Luchi" | Falsos positivos/h (20 h no vistas) | Sintético Luchi / Oye |
+|---|---|---|---|---|---|---|
+| v1 (umbral 0,7) | Solo sintéticos | **0/33** | 0/14 | 0/15 | 0,05 | 98,5 % / 99,0 % |
+| **v2** (umbral 0,7) | + mitad de las frases reales de Luz (18 / 5 / 7 tomas) | **14/15** | 5/9 | 0/8 | 0,25 | 96,9 % / 96,9 % |
+
+**Lección:** con solo positivos sintéticos, todo lo real que vio el modelo era negativo y aprendió en parte a reconocer "voz de computadora". Unas pocas tomas reales, aumentadas en cada lote, alcanzan para cambiarlo. Normalizar el volumen no influyó; la voz real tiene menos graves (micrófono de auricular) y es infantil (más aguda).
+
+Próximo: voces reales de **otras personas** (para medir con alguien que el modelo no escuchó), más tomas de "Oye Luchi" y minería de negativos difíciles. Plan B si no alcanza: frontend con el `speech_embedding` de Google (Apache 2.0, convertido por nosotros desde el original).
