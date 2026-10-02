@@ -24,6 +24,7 @@ Tareas en orden de ejecución. Cada una es un issue; se toman de a una (ver [CON
 - [ ] [#14](https://github.com/MaxLezano/LuchiAssistant/issues/14) **F0-14** Cierre de F0 🙋
 - [x] [#105](https://github.com/MaxLezano/LuchiAssistant/issues/105) **F0-15** Documentar la visión de producto y distribución
 - [x] [#116](https://github.com/MaxLezano/LuchiAssistant/issues/116) **F0-16** Principio de desarrollo propio y registro de licencias
+- [x] [#118](https://github.com/MaxLezano/LuchiAssistant/issues/118) **F0-17** Probar lo que se puede hacer con la tele del comedor
 
 ## F1 · Escucha y personaje
 
