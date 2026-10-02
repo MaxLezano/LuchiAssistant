@@ -71,3 +71,6 @@ logs/
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# --- Resultados de pruebas locales ---
+spikes/casa/resultado-*.json
