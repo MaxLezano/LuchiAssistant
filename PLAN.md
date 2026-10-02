@@ -533,7 +533,7 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 | "Yo / Otros" no distingue a cada participante | Suficiente para el uso previsto. Identificar a cada persona requeriría modelos extra; se evalúa solo si hace falta |
 | La VM de Hyper-V no existe en Windows Home y exige reiniciar | En la PC de desarrollo se mantiene (D8). Antes de distribuir se evalúa VirtualBox, conectarse a un HA existente o usar Luchi sin casa ([docs/PRODUCTO.md](docs/PRODUCTO.md) §4, F13) |
 | Luchi sobrecarga PCs más modestas | Perfiles de hardware, descarga de modelos tras inactividad, modo juego y límites en segundo plano ([docs/PRODUCTO.md](docs/PRODUCTO.md) §3) |
-| Licencias para uso comercial | Revisar modelos, voces de Piper, LLM y librerías antes de publicar (F13) |
+| Licencias para uso comercial | Revisar modelos, voces de Piper, LLM y librerías antes de publicar (F13). `piper-tts` es **GPL-3.0**: evaluar sherpa-onnx (Apache 2.0, corre modelos de Piper) al implementar el TTS en F2 |
 | Portar el personaje de Python a TypeScript | El prototipo es la especificación ejecutable: tests visuales que comparan el renderer TS con frames exportados del prototipo (diferencia por píxel con tolerancia), más el "laboratorio del personaje" (propuesta 8) para revisarlo a ojo |
 
 ---
@@ -583,6 +583,7 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 | D24 | **Integraciones oficiales de Home Assistant por defecto**, aunque usen la nube del fabricante (por ejemplo, Tuya oficial en lugar de Tuya Local). Lo local queda como opción avanzada | Luchi se va a comercializar: lo oficial viene con HA, lo mantiene su equipo, es lo más compatible y lo más fácil para el usuario. Luchi le habla siempre a HA, así que el código no cambia según la integración. Voz, IA y datos personales siguen sin salir de la PC ([docs/PRODUCTO.md](docs/PRODUCTO.md) §6) |
 | D25 | Luchi se distribuye como producto: web de presentación + instalador para Windows | Pedido del usuario. Agrega requisitos de instalación sin conocimientos técnicos, perfiles de hardware y compatibilidad con Windows Home ([docs/PRODUCTO.md](docs/PRODUCTO.md)) |
 | D26 | Perfiles de hardware (completo, equilibrado, liviano) | Que funcione en PCs sin una GPU grande y que en reposo casi no consuma ([docs/PRODUCTO.md](docs/PRODUCTO.md) §3) |
+| D27 | Voz provisoria **es_AR-daniela-high**; los nombres en inglés se pronuncian con fonemas de espeak `en-us` insertados entre `[[ ]]` | Rioplatense como Luchi. Los fonemas automáticos suenan igual que reescribir a mano y no exigen escribir cada nombre ([spikes/piper](spikes/piper/)). En F9 la reemplaza la voz clonada |
 
 ---
 
