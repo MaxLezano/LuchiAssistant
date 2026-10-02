@@ -45,3 +45,14 @@ Escucha del usuario sobre una muestra de 48 clips, y medición con Whisper sobre
 - Variación acotada (velocidad 0,85–1,25, ruido 0,5–0,75, ritmo 0,6–0,9): con más variación las voces deforman las palabras cortas.
 - 1 hilo de onnxruntime por proceso: con 14 procesos de 16 hilos cada uno la generación bajaba a 18 clips/s; con 1 hilo, 104 clips/s.
 - La validación en español la dan las **grabaciones reales** de la familia (`spikes/grabar-voz`, nunca a git).
+
+## Dataset resultante (F0-10)
+
+| Clase | Generados | Revisados con Whisper | Aceptados para entrenar | Validación aceptada |
+|---|---|---|---|---|
+| "Luchi" | 43.000 (39.000 + 3.900) | 15.000 | **10.875** (72 %) | 3.281 / 3.900 (84 %) |
+| "Oye Luchi" | 66.000 (60.000 + 6.000) | 15.000 | **7.519** (50 %; sharvard 66 %, davefx 47 %, libritts 25 %) | 1.674 / 6.000 (28 %) |
+| Negativos parecidos | 44.000 | Parcial: solo ~0,3 % sonaba a "Luchi" | **39.866** | 4.000 |
+| Negativos generales | — | — | **496 h** | 41 h |
+
+Whisper large-v3-turbo revisa ~9 clips/s en esta PC (probado uno a uno, por lotes, en float16 e int8): por eso se revisa una parte de los positivos. Los rechazados quedan en `data/rechazados/` para escucharlos.
