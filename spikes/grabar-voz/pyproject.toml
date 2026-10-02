@@ -1,0 +1,9 @@
+[project]
+name = "grabar-voz"
+version = "0.1.0"
+description = "Herramienta para grabar la voz propia de Luchi (F9-02) y muestras reales de 'Luchi' (F0-13)"
+requires-python = "==3.12.*"
+dependencies = ["sounddevice>=0.5", "numpy>=1.26", "soundfile>=0.12"]
+
+[tool.uv]
+package = false

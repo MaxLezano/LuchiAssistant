@@ -1,0 +1,172 @@
+# Frases para grabar la voz de Luchi. Texto propio del proyecto (D28).
+# Formato: "## sección" y una frase por línea. Lo que va entre [corchetes] es una indicación, no se lee.
+# "detector": muestras reales para el detector de "Luchi" (F0-13). "voz": para entrenar la voz propia (F9).
+
+## detector
+Luchi [normal]
+Luchi [normal, otra vez]
+Luchi [un poco más fuerte]
+Luchi [bajito]
+Luchi [como si la llamaras desde lejos]
+Luchi [como pregunta: ¿Luchi?]
+Luchi [contenta]
+Luchi [rápido]
+Luchi [lento]
+Luchi [como si estuvieras cansada]
+Luchi [normal]
+Luchi [más fuerte]
+Luchi [bajito, otra vez]
+Luchi [cantando]
+Luchi [desde lejos, otra vez]
+Oye Luchi [normal]
+Oye Luchi [más fuerte]
+Oye Luchi [bajito]
+Oye, Luchi [con una pausa]
+Oye Luchi [rápido]
+Oye Luchi [como pregunta]
+Oye Luchi [contenta]
+Oye Luchi [normal, otra vez]
+Luchi, prendé la luz del comedor
+Luchi, poné música
+Luchi, ¿qué hora es?
+Luchi, apagá la tele
+Oye Luchi, subí el volumen
+Luz [tu nombre, normal]
+Luz [tu nombre, como si te llamaran]
+la luz
+prendé la luz
+Lucho
+Lucía
+lucha
+lunes
+leche
+mochi
+mucha
+Lucas
+
+## voz
+¡Hola! Soy Luchi. ¿En qué te ayudo?
+Listo.
+Listo, ya está.
+Prendí la luz del comedor.
+Apagué la luz del balcón.
+Ya apagué todas las luces.
+Subí el volumen.
+Bajé el volumen un poquito.
+Puse música en la compu.
+Pausé el video.
+Abriendo Netflix en la tele.
+Abriendo YouTube.
+No encontré la tele del comedor. ¿Está prendida?
+Perdón, no te entendí. ¿Me lo repetís?
+¿Cuál de los dos querés abrir?
+Encontré dos juegos con ese nombre.
+¿Querés que apague la compu?
+Dale, la apago en un minuto.
+Grabando. Acordate de avisarle a los demás.
+Listo, guardé la grabación.
+Ya terminé de transcribir la reunión.
+Son las ocho y media de la noche.
+Te aviso en diez minutos.
+Te recuerdo que tenés que salir a las cinco.
+¡Gracias! Me pone contenta ayudarte.
+Uy, me mareé. ¡De a una, por favor!
+Shh, no estoy escuchando.
+Buenos días. ¿Cómo dormiste?
+Buenas noches. Que descanses.
+Es tarde, ¿no tenés sueño?
+Hoy está nublado y hace un poco de frío.
+Mañana va a llover a la tarde.
+El perro de mi vecina se llama Firulais.
+Me gustan las frutillas con crema.
+Ayer fuimos a la plaza a andar en bici.
+La mesa de la cocina es de madera.
+¿Viste la luna anoche? Estaba enorme.
+Mi color favorito es el rosa.
+Los gatos duermen casi todo el día.
+En verano vamos a la playa con la familia.
+Quiero un helado de chocolate y dulce de leche.
+La biblioteca abre a las nueve de la mañana.
+El tren llegó tarde otra vez.
+Hay que regar las plantas del balcón.
+Las estrellas brillan mucho en el campo.
+Mi abuela hace las mejores empanadas.
+¿Jugamos a las escondidas?
+El arco iris tiene siete colores.
+Cuando sea grande quiero ser veterinaria.
+La tortuga camina despacito pero llega.
+Este fin de semana vamos al cine.
+¿Me prestás tu lápiz verde?
+El sol sale por el este y se esconde por el oeste.
+Hoy aprendí a sumar con llevadas.
+Los pájaros cantan temprano en la mañana.
+Me encanta escuchar cuentos antes de dormir.
+El chocolate caliente es ideal para el invierno.
+La pelota quedó arriba del techo.
+¿Dónde dejé mis zapatillas?
+Vamos a hacer una torta para el cumpleaños.
+El elefante es el animal terrestre más grande.
+Mi hermano juega al fútbol todos los sábados.
+La maestra nos leyó una poesía muy linda.
+Tengo un rompecabezas de mil piezas.
+Las vacaciones de invierno empiezan en julio.
+El colectivo pasa cada quince minutos.
+Me lavé los dientes y me fui a dormir.
+¿Querés jugar a la play conmigo?
+El dragón vivía en una cueva gigante.
+Había una vez una princesa muy valiente.
+La jirafa tiene el cuello larguísimo.
+Hoy almorzamos fideos con tuco.
+El reloj de la cocina está atrasado.
+Ponete la campera que hace frío.
+Mirá qué lindo dibujo hice.
+Ya hice la tarea de matemática.
+El mar estaba tranquilo y transparente.
+Cuidado, que el piso está mojado.
+Los dinosaurios vivieron hace millones de años.
+Me gusta bailar cuando suena mi canción favorita.
+Las hormigas trabajan todas juntas.
+El cielo se puso naranja al atardecer.
+¿Cuántos años tenés?
+Mi muñeca se llama Sofía.
+El queso le gusta mucho al ratón.
+Fuimos al zoológico y vimos un león.
+La nieve es fría y blanca.
+El viento hizo volar mi barrilete.
+Hoy es un día perfecto para un picnic.
+¿Me ayudás a ordenar la habitación?
+Los bomberos apagaron el fuego rápido.
+El cartero trajo una carta para vos.
+Me duele un poquito la panza.
+Quiero leche con vainillas, por favor.
+El caracol lleva su casa a todos lados.
+Ayer llovió tanto que se inundó la vereda.
+La guitarra tiene seis cuerdas.
+Los planetas giran alrededor del sol.
+¿Qué querés comer hoy, milanesa o pizza?
+El búho se despierta de noche.
+Mi papá cocina un asado riquísimo.
+Me encontré una moneda en la plaza.
+¡Qué sorpresa tan linda!
+No me gusta cuando hay truenos.
+Uno, dos, tres, cuatro, cinco, seis, siete, ocho, nueve, diez.
+Enero, febrero, marzo, abril, mayo, junio.
+Julio, agosto, septiembre, octubre, noviembre, diciembre.
+Lunes, martes, miércoles, jueves, viernes, sábado y domingo.
+Rojo, naranja, amarillo, verde, celeste, azul y violeta.
+¿Por qué el cielo es azul?
+¡Ay, qué susto me diste!
+Bueno, no pasa nada, lo intentamos de nuevo.
+¿Seguro? Mirá que no se puede deshacer.
+¡Feliz cumpleaños! Que cumplas muchos más.
+Hoy es miércoles quince de octubre.
+Faltan veinte minutos para las seis.
+El volumen está al cincuenta por ciento.
+La temperatura es de dieciocho grados.
+Encontré tres resultados. ¿Cuál querés?
+Ya lo anoté para que no te olvides.
+Volví a prender la luz, perdón.
+¿Qué querías que hiciera?
+Te leo el mensaje: llego en diez minutos.
+Escribí lo que me dictaste.
+Me voy a esconder un ratito. ¡Llamame si me necesitás!
