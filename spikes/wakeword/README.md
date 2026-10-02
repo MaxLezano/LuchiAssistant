@@ -65,7 +65,10 @@ Whisper large-v3-turbo revisa ~9 clips/s en esta PC (probado uno a uno, por lote
 |---|---|---|---|---|---|---|
 | v1 (umbral 0,7) | Solo sintéticos | **0/33** | 0/14 | 0/15 | 0,05 | 98,5 % / 99,0 % |
 | **v2** (umbral 0,7) | + mitad de las frases reales de Luz (18 / 5 / 7 tomas) | **14/15** | 5/9 | 0/8 | 0,25 | 96,9 % / 96,9 % |
+| **v3** (umbral 0,8) | + **todas** las tomas de Luz (33 / 14 / 15) + minería de negativos difíciles (492 → 114 → 37 ventanas) | *(usadas para entrenar)* | — | 0/15 | **0,1** | 96,0 % / 95,9 % |
 
 **Lección:** con solo positivos sintéticos, todo lo real que vio el modelo era negativo y aprendió en parte a reconocer "voz de computadora". Unas pocas tomas reales, aumentadas en cada lote, alcanzan para cambiarlo. Normalizar el volumen no influyó; la voz real tiene menos graves (micrófono de auricular) y es infantil (más aguda).
+
+v3 es el modelo de uso (`--real-todo --minar 10000 20000 30000`, 40.000 pasos). Como entrenó con todas las tomas de Luz, la prueba honesta es con otras personas (F0-13).
 
 Próximo: voces reales de **otras personas** (para medir con alguien que el modelo no escuchó), más tomas de "Oye Luchi" y minería de negativos difíciles. Plan B si no alcanza: frontend con el `speech_embedding` de Google (Apache 2.0, convertido por nosotros desde el original).

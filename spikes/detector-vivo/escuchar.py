@@ -76,7 +76,7 @@ def probar_archivos(args):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--modelo", type=Path, default=Path(r"E:\Luchi\models\detector\v2\detector.onnx"))
-    ap.add_argument("--umbral", type=float, default=0.7)
+    ap.add_argument("--umbral", type=float, default=0.8)
     ap.add_argument("--minutos", type=float, default=0, help="0 = hasta Ctrl+C")
     ap.add_argument("--nota", default="en-vivo", help="etiqueta de la prueba (ej. tele, distancia-3m)")
     ap.add_argument("--dispositivo", default=None, help="micrófono (nombre o índice); por defecto el de Windows")
