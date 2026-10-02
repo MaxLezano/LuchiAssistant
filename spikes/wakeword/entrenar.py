@@ -219,6 +219,28 @@ def falsos_por_hora(modelo, neg: Negativos, mel_dev, umbral: float, paso: int = 
     return activaciones / max(horas, 1e-9), horas
 
 
+@torch.no_grad()
+def minar_dificiles(modelo, neg: Negativos, dispositivo, rng, horas: float = 50.0, umbral: float = 0.3,
+                    maximo: int = 30000) -> torch.Tensor | None:
+    """Recorre ~horas de negativos de entrenamiento cada 80 ms y junta las ventanas con p(Luchi u Oye) > umbral."""
+    modelo.eval()
+    encontradas = []
+    por_matriz = int(horas * 3600 * 100 / len(neg.mats))
+    for m in neg.mats:
+        ini0 = int(rng.integers(0, max(1, len(m) - por_matriz)))
+        for ini in range(ini0, min(len(m), ini0 + por_matriz) - CUADROS, 8 * 4096):
+            idx = np.arange(ini, min(len(m) - CUADROS, ini + 8 * 4096), 8)
+            v = torch.from_numpy(np.stack([m[i:i + CUADROS] for i in idx]).astype(np.float32)).to(dispositivo)
+            p = probabilidades(modelo, v)[:, 1:].max(dim=1).values
+            if (p > umbral).any():
+                encontradas.append(v[p > umbral])
+    modelo.train()
+    if not encontradas:
+        return None
+    todo = torch.cat(encontradas)
+    return todo[torch.randperm(len(todo), device=dispositivo)[:maximo]]
+
+
 def feats_de_clips(clips, mel, dispositivo, rng):
     idx = np.arange(len(clips))
     feats = []
@@ -264,6 +286,10 @@ def main():
     ap.add_argument("--salida", type=Path, default=Path("modelos"))
     ap.add_argument("--voz-real", type=Path, default=Path("/mnt/e/Luchi/voice-data/luz/detector"))
     ap.add_argument("--rapido", action="store_true", help="prueba de humo: pocos clips, pasos y horas de validación")
+    ap.add_argument("--real-todo", action="store_true",
+                    help="entrenar con todas las tomas reales (sin dejar mitad de prueba): para el modelo que se usa")
+    ap.add_argument("--minar", type=int, nargs="*", default=[],
+                    help="pasos en los que se buscan negativos difíciles (ventanas que casi activan el modelo)")
     ap.add_argument("--real-train", action="store_true",
                     help="entrenar también con la mitad de las tomas reales (por frase) y medir con la otra mitad")
     args = ap.parse_args()
@@ -290,8 +316,8 @@ def main():
     print(f"  negativos generales: {neg_train.horas:.0f} h train · {neg_val.horas:.0f} h val", flush=True)
 
     reales = {}
-    if args.real_train:
-        reales = {k: v for k, v in grabaciones_reales(args.voz_real, "train").items() if v}
+    if args.real_train or args.real_todo:
+        reales = {k: v for k, v in grabaciones_reales(args.voz_real, None if args.real_todo else "train").items() if v}
         print("  reales para entrenar: " + " · ".join(f"{k} {len(v)}" for k, v in reales.items()), flush=True)
     modelo = Detector().to(dispositivo)
     print(f"  parámetros: {sum(p.numel() for p in modelo.parameters()):,}", flush=True)
@@ -301,8 +327,12 @@ def main():
     # pesos de clase: equivocarse con un negativo (falso positivo) cuesta más que perder un positivo
     pesos = torch.tensor([1.0, 1.0, 1.0], device=dispositivo)
 
+    dificiles = None   # banco de ventanas de negativos que casi activan el modelo
     t0 = time.time()
     for paso in range(1, args.pasos + 1):
+        if paso in args.minar:
+            dificiles = minar_dificiles(modelo, neg_train, dispositivo, rng)
+            print(f"  negativos difíciles: {0 if dificiles is None else len(dificiles)} ventanas", flush=True)
         modelo.train()
         il = rng.integers(0, len(clips["luchi"]["train"]), n_pos // 2)
         io = rng.integers(0, len(clips["oye_luchi"]["train"]), n_pos // 2)
@@ -318,7 +348,11 @@ def main():
         audio = torch.cat(partes).to(dispositivo)
         with torch.no_grad():
             feats = mel(aumentar(audio, ruido, rng_t))
-        feats = torch.cat([feats, neg_train.lote(n_neg, rng).to(dispositivo)])
+        extra = []
+        if dificiles is not None and len(dificiles):
+            extra = [dificiles[torch.randint(0, len(dificiles), (64,), device=dispositivo)]]
+            etiquetas.append(torch.zeros(64))
+        feats = torch.cat([feats, *extra, neg_train.lote(n_neg, rng).to(dispositivo)])
         y = torch.cat(etiquetas + [torch.zeros(n_neg)]).long().to(dispositivo)
         # SpecAugment liviano: tapar bandas y tramos al azar
         if paso > 500:
