@@ -13,7 +13,7 @@ uv run python escuchar.py --archivo toma1.wav toma2.wav  # pasar grabaciones por
 - Cada 80 ms evalúa la última ventana de 1,6 s; después de una detección ignora 2 s.
 - Muestra el nivel del micrófono y la probabilidad de "Luchi" y "Oye Luchi" en vivo.
 - Deja un CSV y un reporte `.md` en `E:\Luchi\pruebas-detector\` (fuera de git).
-- Modelo por defecto: `E:\Luchi\models\detector\v2\detector.onnx`, umbral 0,7.
+- Modelo por defecto: `E:\Luchi\models\detector\v3\detector.onnx`, umbral 0,8 (v2 queda en su carpeta para comparar).
 
 ## Verificado (2026-10-02)
 
