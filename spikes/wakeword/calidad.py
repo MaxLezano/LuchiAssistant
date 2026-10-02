@@ -61,6 +61,41 @@ def modelo():
     return _modelo
 
 
+def transcribir_lote(rutas: list[Path]) -> list[str]:
+    """Transcribe varios clips juntos con CTranslate2 (mismo modelo que transcribir, ~10× más rápido):
+    cada clip se rellena a 30 s, que es lo que espera el encoder de Whisper."""
+    import ctranslate2
+    import numpy as np
+    import soundfile as sf
+    from faster_whisper.tokenizer import Tokenizer
+
+    m = modelo()
+    tok = Tokenizer(m.hf_tokenizer, True, task="transcribe", language="es")
+    prompt = tok.sot_sequence + [tok.no_timestamps]
+    feats, validos = [], []
+    for k, ruta in enumerate(rutas):
+        try:
+            audio, sr = sf.read(str(ruta), dtype="float32")
+            assert sr == 16000
+        except Exception:
+            continue
+        # El espectrograma se calcula solo sobre el audio real (calcularlo sobre 30 s era el cuello de botella,
+        # en CPU). Whisper recorta a (máximo - 8) en log10 y normaliza con (x + 4) / 4, así que el silencio de
+        # relleno vale exactamente máximo - 2: el resultado es equivalente a rellenar el audio.
+        corto = m.feature_extractor(audio[: 30 * 16000], padding=160)[:, :3000]
+        f = np.full((corto.shape[0], 3000), corto.max() - 2.0, dtype=np.float32)
+        f[:, : corto.shape[1]] = corto
+        feats.append(f)
+        validos.append(k)
+    textos = ["ilegible"] * len(rutas)
+    if feats:
+        lote = ctranslate2.StorageView.from_array(np.ascontiguousarray(np.stack(feats), dtype=np.float32))
+        res = m.model.generate(lote, [prompt] * len(feats), beam_size=1, max_length=32)
+        for k, r in zip(validos, res):
+            textos[k] = tok.decode(r.sequences_ids[0]).strip()
+    return textos
+
+
 def transcribir(ruta: Path) -> str:
     # Se pasa el audio ya leído (16 kHz mono): evita PyAV, cuya versión nueva no es compatible.
     import soundfile as sf
@@ -94,13 +129,14 @@ def main():
         if split == "train" and args.maximo:
             random.Random(0).shuffle(wavs)
             wavs = wavs[: args.maximo]
-        for n, wav in enumerate(wavs, 1):
-            if n % 2500 == 0:
-                print(f"  {clase}/{split}: {n}/{len(wavs)}", flush=True)
-            try:
-                texto = transcribir(wav)
-            except Exception:  # clip cortado (por ejemplo, si se interrumpió la generación)
-                texto = "ilegible"
+        textos = {}
+        for ini in range(0, len(wavs), 32):
+            if ini % 2496 == 0:
+                print(f"  {clase}/{split}: {ini}/{len(wavs)}", flush=True)
+            lote = wavs[ini:ini + 32]
+            textos.update(zip(lote, transcribir_lote(lote)))  # "ilegible" si el clip está cortado
+        for wav in wavs:
+            texto = textos[wav]
             voz = wav.stem.split("_", 1)[1].rsplit("_", 1)[0]
             v = por_voz.setdefault(voz, [0, 0])
             if aceptar(clase, texto):
