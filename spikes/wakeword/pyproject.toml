@@ -14,6 +14,7 @@ dependencies = [
     "onnxruntime>=1.18",
     "pyyaml>=6",
     "tqdm>=4.66",
+    "pyarrow>=15",
     "faster-whisper>=1.1",   # control de calidad de las muestras (MIT)
     "nvidia-cublas-cu12",
     "nvidia-cudnn-cu12>=9,<10",
@@ -30,3 +31,6 @@ torchaudio = { index = "pytorch-cu128" }
 name = "pytorch-cu128"
 url = "https://download.pytorch.org/whl/cu128"
 explicit = true
+
+[dependency-groups]
+dev = ["pytest>=8"]
