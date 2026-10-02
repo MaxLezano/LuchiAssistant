@@ -25,14 +25,12 @@ HF = "https://huggingface.co/rhasspy/piper-voices/resolve/main"
 SR = 16000
 
 # (archivo, ruta en HF, hablantes, idioma de la voz). Licencias en docs/LICENCIAS.md.
+# Descartadas al escucharlas (F0-10): carlfm (x_low), mls_9972 y mls_10246 (low) no se entienden en palabras cortas.
 VOCES = {
     "claude": ("es_MX-claude-high", "es/es_MX/claude/high", 1, "es"),
     "davefx": ("es_ES-davefx-medium", "es/es_ES/davefx/medium", 1, "es"),
     "ald": ("es_MX-ald-medium", "es/es_MX/ald/medium", 1, "es"),
-    "carlfm": ("es_ES-carlfm-x_low", "es/es_ES/carlfm/x_low", 1, "es"),
     "sharvard": ("es_ES-sharvard-medium", "es/es_ES/sharvard/medium", 2, "es"),
-    "mls_9972": ("es_ES-mls_9972-low", "es/es_ES/mls_9972/low", 1, "es"),
-    "mls_10246": ("es_ES-mls_10246-low", "es/es_ES/mls_10246/low", 1, "es"),
     "libritts": ("en_US-libritts_r-medium", "en/en_US/libritts_r/medium", 904, "en"),
 }
 
@@ -65,6 +63,12 @@ ADVERSARIAL = [
 ]
 # Frases de una sola palabra suelen ser cortas: se repiten más para equilibrar.
 ADVERSARIAL_EN = ["[[ lˈuːsi ]]", "[[ lˈʌki ]]", "[[ lˈʊkɪŋ ]]", "[[ lˈuːdʒi ]]", "[[ tʃˈuːtʃi ]]", "[[ lˈitʃi ]]"]
+
+
+def variacion(rng: random.Random):
+    """Velocidad (length_scale), entonación (noise) y ritmo (noise_w). Rangos acotados:
+    con más variación las voces deforman las palabras cortas ("loche", "luqui")."""
+    return rng.uniform(0.85, 1.25), rng.uniform(0.5, 0.75), rng.uniform(0.6, 0.9)
 
 
 def descargar(datos: Path, archivo: str, ruta: str) -> Path:
@@ -137,9 +141,7 @@ def planificar(datos: Path, rutas: dict, n: dict, rng: random.Random):
                     texto = rng.choice(ADVERSARIAL_EN) if idioma == "en" and rng.random() < 0.3 else rng.choice(ADVERSARIAL)
                 else:
                     texto = rng.choice(TEXTOS[clase][idioma])
-                ls = rng.uniform(0.75, 1.35)
-                ns = rng.uniform(0.4, 0.9)
-                nw = rng.uniform(0.5, 1.0)
+                ls, ns, nw = variacion(rng)
                 salida = str(clips / clase / split / f"{i:06d}_{v}_{h}.wav")
                 tareas.append((salida, str(rutas[v]), texto, h if VOCES[v][2] > 1 else None, ls, ns, nw, i))
     return tareas

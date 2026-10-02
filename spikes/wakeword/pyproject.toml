@@ -14,6 +14,9 @@ dependencies = [
     "onnxruntime>=1.18",
     "pyyaml>=6",
     "tqdm>=4.66",
+    "faster-whisper>=1.1",   # control de calidad de las muestras (MIT)
+    "nvidia-cublas-cu12",
+    "nvidia-cudnn-cu12>=9,<10",
 ]
 
 [tool.uv]
