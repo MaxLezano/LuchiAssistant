@@ -34,22 +34,34 @@ VOCES = {
     "libritts": ("en_US-libritts_r-medium", "en/en_US/libritts_r/medium", 904, "en"),
 }
 
-# Validación: voces y hablantes que no se ven en entrenamiento.
-VAL_VOCES_ES = {"ald"}
+# Validación: hablantes ingleses que no se ven en entrenamiento. La validación en español la dan las
+# grabaciones reales (spikes/grabar-voz), que valen más que cualquier voz sintética.
 VAL_HABLANTES_EN = set(range(800, 904))
+
+# Qué voces dicen bien cada frase, medido con variantes.py + calidad.py (F0-10, 40 clips por variante):
+#   luchi:     libritts [[ lˈutʃi ]] 85-90 % · sharvard ~45 % · davefx ~30 % · claude y ald 0 % ("Loche")
+#   oye_luchi: sharvard 90-100 % · davefx 60-80 % · libritts 25-35 % con las variantes de abajo
+# (voz, peso) por clase; claude y ald quedan para los negativos: su "Loche" es un negativo ideal.
+VOCES_POR_CLASE = {
+    "luchi": [("libritts", 0.75), ("sharvard", 0.15), ("davefx", 0.10)],
+    "oye_luchi": [("sharvard", 0.45), ("davefx", 0.30), ("libritts", 0.25)],
+    "adversarial": [("libritts", 0.40), ("sharvard", 0.15), ("davefx", 0.15), ("claude", 0.15), ("ald", 0.15)],
+}
 
 # Las voces en español leen el texto; las inglesas reciben fonemas del español entre [[ ]],
 # así los 904 hablantes dicen "Luchi" como en castellano.
 TEXTOS = {
     "luchi": {
-        "es": ["Luchi", "Luchi.", "¡Luchi!", "Luchi,", "¿Luchi?", "Luchi..."],
+        "es": ["Luchi", "Luchi,", "Lúchi", "¿Luchi?"],
         "en": ["[[ lˈutʃi ]]", "[[ lˈutʃi. ]]", "[[ lˈuːtʃi ]]", "[[ lˈutʃi! ]]"],
     },
     "oye_luchi": {
-        "es": ["Oye Luchi", "Oye, Luchi.", "¡Oye Luchi!", "Oye Luchi,", "¿Oye, Luchi?"],
-        "en": ["[[ ˈoʝe lˈutʃi ]]", "[[ ˈoje lˈutʃi ]]", "[[ ˈoʝe, lˈutʃi. ]]", "[[ ˈoje lˈuːtʃi! ]]"],
+        "es": ["Oye Luchi", "¡Oye Luchi!", "Oye Luchi,", "Oye, Luchi"],
+        "en": ["[[ ˈoʊ jˈeɪ lˈutʃi ]]", "[[ ˈo jˈe lˈutʃi ]]", "[[ ˈoʝe, lˈutʃi. ]]"],
     },
 }
+# Se genera de más porque el control de calidad descarta lo que no se entiende.
+SOBREGENERAR = {"luchi": 1.3, "oye_luchi": 2.0, "adversarial": 1.0}
 
 # Negativos parecidos: comparten sonidos con "Luchi" o son órdenes frecuentes de la casa.
 ADVERSARIAL = [
@@ -123,19 +135,20 @@ def planificar(datos: Path, rutas: dict, n: dict, rng: random.Random):
     tareas = []
     clips = datos / "clips"
 
-    def elegir(split: str):
-        """Voz + hablante según el split, con 50 % de probabilidad de voz inglesa (904 hablantes)."""
-        if rng.random() < 0.5:
-            pool = sorted(VAL_HABLANTES_EN) if split == "val" else [h for h in range(800) if h not in VAL_HABLANTES_EN]
-            return "libritts", rng.choice(pool)
-        es = [v for v in VOCES if VOCES[v][3] == "es" and ((v in VAL_VOCES_ES) == (split == "val"))]
-        v = rng.choice(es)
+    def elegir(clase: str, split: str):
+        """Voz + hablante. En validación solo hablantes ingleses que no se usan para entrenar."""
+        if split == "val":
+            return "libritts", rng.choice(sorted(VAL_HABLANTES_EN))
+        voces, pesos = zip(*VOCES_POR_CLASE[clase])
+        v = rng.choices(voces, pesos)[0]
+        if v == "libritts":
+            return v, rng.randrange(800)
         return v, rng.randrange(VOCES[v][2])
 
     for clase in ("luchi", "oye_luchi", "adversarial"):
         for split in ("train", "val"):
-            for i in range(n[(clase, split)]):
-                v, h = elegir(split)
+            for i in range(int(n[(clase, split)] * SOBREGENERAR[clase])):
+                v, h = elegir(clase, split)
                 idioma = VOCES[v][3]
                 if clase == "adversarial":
                     texto = rng.choice(ADVERSARIAL_EN) if idioma == "en" and rng.random() < 0.3 else rng.choice(ADVERSARIAL)

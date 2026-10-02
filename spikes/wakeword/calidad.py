@@ -8,19 +8,23 @@ Los clips rechazados se mueven a <datos>/rechazados/ para poder escucharlos.
 Uso (en WSL):  python calidad.py --datos ~/luchi-wakeword/data [--muestra]
 """
 import argparse
+import ctypes
 import json
-import os
 import re
 import shutil
 import sysconfig
 import unicodedata
 from pathlib import Path
 
-# CTranslate2 busca cuBLAS/cuDNN en LD_LIBRARY_PATH: se agregan los de los paquetes nvidia-*.
+# CTranslate2 necesita cuBLAS/cuDNN 12/9 de los paquetes nvidia-*. LD_LIBRARY_PATH no sirve una vez
+# arrancado el proceso, así que se cargan a mano (RTLD_GLOBAL) antes de crear el modelo.
 _nv = Path(sysconfig.get_paths()["purelib"]) / "nvidia"
-os.environ["LD_LIBRARY_PATH"] = ":".join([str(p) for p in _nv.glob("*/lib")] + [os.environ.get("LD_LIBRARY_PATH", "")])
+for _patron in ("cublas/lib/libcublasLt.so.12", "cublas/lib/libcublas.so.12", "cudnn/lib/libcudnn*.so.9"):
+    for _lib in sorted(_nv.glob(_patron)):
+        ctypes.CDLL(str(_lib), mode=ctypes.RTLD_GLOBAL)
 
-LUCHI = r"lu ?(ch|sh)i"
+# Grafías con las que Whisper escribe /lutʃi/: "Luchi", "Luchy", "Lucci", "Lutchi". No acepta "Luci" ni "Loche".
+LUCHI = r"lu ?(ch|sh|cc|tch)(i|y)"
 ACEPTA = {
     "luchi": re.compile(rf"^{LUCHI}$"),
     "oye_luchi": re.compile(rf"^(oye|olle|oie) {LUCHI}$"),
@@ -55,7 +59,12 @@ def modelo():
 
 
 def transcribir(ruta: Path) -> str:
-    segs, _ = modelo().transcribe(str(ruta), language="es", beam_size=1, vad_filter=False,
+    # Se pasa el audio ya leído (16 kHz mono): evita PyAV, cuya versión nueva no es compatible.
+    import soundfile as sf
+
+    audio, sr = sf.read(str(ruta), dtype="float32")
+    assert sr == 16000, f"{ruta} no está a 16 kHz"
+    segs, _ = modelo().transcribe(audio, language="es", beam_size=1, vad_filter=False,
                                   condition_on_previous_text=False, without_timestamps=True)
     return " ".join(s.text for s in segs).strip()
 
