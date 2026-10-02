@@ -16,6 +16,7 @@ Asistente de voz que corre **100 % local** como app de Windows. Se despierta al 
 | [docs/INTERFAZ.md](docs/INTERFAZ.md) | Cada pantalla, tokens visuales, estados de la isla, bandeja, barra lateral |
 | [assets/luchi/README.md](assets/luchi/README.md) | Capas del personaje, `catalogo.json` y **orden de composición** |
 | [docs/PRODUCTO.md](docs/PRODUCTO.md) | Luchi como producto: web, instalador, perfiles de hardware, Windows Home |
+| [docs/LICENCIAS.md](docs/LICENCIAS.md) | Licencia y veredicto de cada dependencia, modelo y dataset; qué se desarrolla propio |
 
 Referencias visuales (abrir en el navegador):
 - `mockups/animaciones/visor.html`: las 16 emociones, catálogo de personalización y presets.
@@ -31,12 +32,13 @@ En los documentos, `§` significa "sección" (por ejemplo, §3.5 = sección 3.5)
 4. **Privacidad:** no se graba ni guarda audio antes de detectar "Luchi"; la isla está visible mientras escucha; grabar reuniones solo por orden explícita, con recordatorio de consentimiento e indicador visible; tokens en el Administrador de credenciales de Windows.
 5. **Rápido para lo frecuente:** router sin LLM para órdenes comunes (casa vía Home Assistant Assist, "pausa", volumen); el LLM es el fallback.
 6. **Es un producto.** Luchi se va a distribuir con una web y un instalador para Windows ([docs/PRODUCTO.md](docs/PRODUCTO.md)): pensar cada decisión para usuarios sin conocimientos técnicos, en Windows Home y Pro, y con hardware más modesto que el de desarrollo.
+7. **Desarrollo propio primero (D28).** Lo de terceros solo si es open source y su licencia permite vender (MIT, BSD, Apache, CC0, CC BY…). Nada GPL/AGPL en lo que se distribuye ni datos/modelos no comerciales. Antes de agregar una dependencia, un modelo o un dataset, verificar la licencia y anotarla en [docs/LICENCIAS.md](docs/LICENCIAS.md).
 
 ## Arquitectura y stack
 
 - **Screaming architecture por features, hexagonal dentro de cada una** (domain / ports / application / adapters). UI con **container/presentational** y **atomic design**. Estructura completa en PLAN.md §5.
 - `apps/desktop`: **Tauri 2** + TypeScript + Vite (UI, isla, agente) y Rust (ejecutor de acciones, catálogo de apps, sistema, bandeja).
-- `services/voice` (`luchi-voice`): **Python 3.12 con uv** (no la 3.14 instalada en la PC). openWakeWord ("Luchi" y "Oye Luchi"), Silero VAD, faster-whisper en GPU, Piper (TTS), grabación con PyAudioWPatch (WASAPI loopback) + ffmpeg. Se comunica con la app por WebSocket en `127.0.0.1` con token.
+- `services/voice` (`luchi-voice`): **Python 3.12 con uv** (no la 3.14 instalada en la PC). detector propio de "Luchi" y "Oye Luchi" (D29), Silero VAD, faster-whisper en GPU, TTS con modelos tipo Piper en onnxruntime y fonemizador propio (D30), grabación con PyAudioWPatch (WASAPI loopback) + ffmpeg. Se comunica con la app por WebSocket en `127.0.0.1` con token.
 - **Ollama** con `qwen3:8b` y `think: false`. **Home Assistant OS** en una VM de Hyper-V. **SQLite** para datos locales.
 - Tests desde el inicio: **Vitest**, **cargo test**, **pytest**. El dominio se prueba sin micrófono ni IA.
 

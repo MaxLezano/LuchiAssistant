@@ -77,10 +77,10 @@ Cómo se implementa en la app: §3.5.
 ```
                     ┌────────────────────────────────────────────┐
   Micrófono ──────► │  luchi-voice  (Python, segundo plano)         │
-  Parlantes ◄────── │  1. openWakeWord → detecta "Luchi"        │
+  Parlantes ◄────── │  1. Detector propio → detecta "Luchi"     │
                     │  2. Silero VAD   → detecta fin de la frase  │
                     │  3. faster-whisper (GPU) → texto            │
-                    │  4. Piper (TTS)  → Luchi responde en voz alta │
+                    │  4. TTS propio (VITS) → responde en voz alta  │
   Audio del ──────► │  5. Grabador: micrófono + audio del sistema   │
   sistema           │     → MP3 + transcripción + traducción        │
                     └───────────────┬────────────────────────────┘
@@ -111,7 +111,7 @@ Cómo se implementa en la app: §3.5.
 
 ### 3.2 Flujo de una orden
 
-1. **openWakeWord** escucha en la CPU todo el tiempo.
+1. El **detector propio** (D29) escucha en la CPU todo el tiempo.
 2. Dices **"Luchi"**: suena un tono corto, baja el borde negro de la isla, Luchi cae desde él como superhéroe (*aparecer*) y queda *escuchando*.
 3. Dices "prende la luz del comedor". **Silero VAD** detecta que terminaste.
 4. **faster-whisper** transcribe en la GPU → `transcript`.
@@ -291,10 +291,10 @@ Todo el diseño ya existe en el repo. Esta tabla dice qué es cada cosa y qué s
 | UI | TypeScript + Vite | Ligera. Se suma React o Svelte si crece |
 | Núcleo de sistema | Rust | Lanza procesos sin `cmd`, lee el catálogo, maneja ventanas, teclas multimedia y volumen |
 | LLM | **Ollama** con `qwen3:8b` como candidato | Tool calling, ~6 GB de VRAM. Usar con **thinking desactivado** (`think: false`) para no sumar latencia. Comparar 2–3 modelos en F3 |
-| Palabra de activación | **openWakeWord** | Open source y 100 % offline. "Luchi" se entrena con muestras sintéticas generadas con Piper en español |
+| Palabra de activación | **Detector propio** (D29), con openWakeWord como referencia | Modelo chico propio en ONNX; se entrena con muestras sintéticas en español y negativos con licencia comercial |
 | Fin de frase | **Silero VAD** | Detecta cuándo dejaste de hablar |
 | Voz a texto | **faster-whisper** (GPU), probar `large-v3-turbo` vs `medium` | Buen español; `turbo` es casi tan preciso como `large` y mucho más rápido |
-| Voz de Luchi | **Piper** con una voz en español | Local, rápido, corre en CPU |
+| Voz de Luchi | Modelos de voz tipo **Piper/VITS** ejecutados con onnxruntime y **fonemizador propio** (D30) | Local, rápido, corre en CPU, sin GPL. Voz provisoria es_AR-daniela; la propia llega en F9 |
 | Casa | **Home Assistant OS** en una VM de Hyper-V | Integra casi cualquier marca de luces y teles. Assist entiende español sin LLM. Es la instalación recomendada en Windows (Docker en Windows no está soportado oficialmente) |
 | Comunicación voz ↔ app | WebSocket en `127.0.0.1` con token | Simple y solo local |
 | Personaje | **Canvas 2D** + assets de `assets/luchi/` | Suficiente para componer capas, transformar y usar `multiply`; sin dependencias extra. Se evalúa PixiJS solo si hiciera falta rendimiento |
@@ -373,14 +373,14 @@ LuchiAssistant/
       │  ├─ listening/              # feature: wake word, VAD, transcripción de órdenes, TTS
       │  │  ├─ domain/              # Wake, Listening, Transcript, Speak
       │  │  ├─ ports/               # WakeWordPort, VadPort, SpeechToTextPort, TextToSpeechPort
-      │  │  └─ adapters/            # OpenWakeWord, SileroVad, FasterWhisper, Piper
+      │  │  └─ adapters/            # LuchiWakeWord, SileroVad, FasterWhisper, VitsTts
       │  ├─ recording/              # feature: grabar, transcribir y traducir reuniones
       │  │  ├─ domain/              # Recording, Track (yo/otros), Segment, Transcript
       │  │  ├─ ports/               # AudioCapturePort, EncoderPort, TranslatorPort
       │  │  └─ adapters/            # MicCapture, LoopbackCapture, Ffmpeg, OllamaTranslator, Argos
       │  ├─ shared/                 # WsServer, configuración
       │  └─ main.py
-      ├─ models/                    # oye_luchi.onnx, voces Piper (no van a git)
+      ├─ models/                    # luchi.onnx, oye_luchi.onnx, voces (no van a git)
       └─ pyproject.toml
 ```
 
@@ -388,9 +388,9 @@ LuchiAssistant/
 
 | Puerto | Adaptador inicial | Alternativas futuras |
 |---|---|---|
-| `WakeWordPort` | openWakeWord | microWakeWord, atajo de teclado (siempre disponible) |
+| `WakeWordPort` | Detector propio (D29) | Atajo de teclado (siempre disponible) |
 | `SpeechToTextPort` | faster-whisper | whisper.cpp |
-| `TextToSpeechPort` | Piper | Voz de Luchi clonada (F9) |
+| `TextToSpeechPort` | Modelo VITS en onnxruntime + fonemizador propio (D30) | Voz propia de Luchi (F9) |
 | `LlmPort` | Ollama | LM Studio, llama.cpp |
 | `HomePort` | Home Assistant (Assist + REST) | — |
 | `TitleResolverPort` | Ver §6.1 | Catálogo propio de favoritos |
@@ -455,9 +455,9 @@ Cada fase deja algo usable de punta a punta. Lo que más se usa (casa, música, 
 
 | Fase | Entregable | Cuándo está lista |
 |---|---|---|
-| **F0 · Preparación** | Instalar herramientas, VM de Home Assistant, **inventario** de luces/tele/parlantes y **spike de openWakeWord** con "Luchi" | HA ve las luces y la tele; el detector reconoce "Luchi" en una prueba con < 1 falso positivo por hora de TV de fondo |
+| **F0 · Preparación** | Instalar herramientas, VM de Home Assistant, **inventario** de luces/tele/parlantes y **spike del detector propio** de "Luchi" (D29) | HA ve las luces y la tele; el detector reconoce "Luchi" en una prueba con < 1 falso positivo por hora de TV de fondo |
 | **F1 · Escucha y personaje** | `luchi-voice` (wake + VAD + whisper + WebSocket) e isla en Tauri con el **renderer del personaje** (cuerpo, cara paramétrica, estilo por defecto) y las emociones *aparecer, atento, escuchando* (con nivel real del micrófono), *esconderse* y *dormido*. Atajo de teclado como alternativa. **Laboratorio del personaje** y tests visuales. **Estado del sistema** (micrófono y detector) | "Luchi, hola": Luchi cae desde el borde, escucha, muestra "hola" y se esconde saltando hacia arriba |
-| **F2 · Casa** | Router + `home_command` vía Home Assistant Assist. Piper responde en voz. Emociones *hablando* (boca con la amplitud del TTS), *feliz*, *guiño* y *apenado* | "Luchi, prende la luz del comedor" funciona y Luchi contesta "Listo" |
+| **F2 · Casa** | Router + `home_command` vía Home Assistant Assist. Luchi responde en voz (TTS propio, D30). Emociones *hablando* (boca con la amplitud del TTS), *feliz*, *guiño* y *apenado* | "Luchi, prende la luz del comedor" funciona y Luchi contesta "Listo" |
 | **F3 · Cerebro** | Agente con Ollama y tool calling. `play_media` (YouTube en PC), `media_control`, `set_volume`, `open_url`, `web_search`. **Preguntas generales.** Comparar modelos con el set de órdenes. Emoción *pensando* (> 400 ms) | "Luchi, pon lofi" y "pausa" funcionan |
 | **F4 · Apps y sistema** | Catálogo (Menú Inicio, Steam; luego Epic/Xbox), `launch_app`, `close_app`, preguntas de aclaración por voz con la emoción *pregunta*. **Acciones del sistema:** salida de audio, capturas, carpetas, bloquear, suspender/apagar con confirmación | Abre y cierra juegos por nombre sin mirar la pantalla |
 | **F5 · Tele y películas** | Destinos multimedia, encender/apagar la tele, abrir YouTube/Netflix en la tele o en la PC, `TitleResolverPort` | "Luchi, pon Interestelar en Netflix en la tele" |
@@ -490,8 +490,8 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 
 - Motores TTS locales con clonación que corran en la RTX 3080. Revisar **licencia** y calidad en español antes de elegir.
 - Grabación: 5–30 minutos de voz limpia, en un lugar silencioso, con frases variadas.
-- Va detrás de `TextToSpeechPort`: reemplaza a Piper sin tocar el resto.
-- La latencia importa: si el motor clonado es lento, se usa para frases fijas pregeneradas ("Listo", "Abriendo…") y Piper para el resto.
+- Va detrás de `TextToSpeechPort`: reemplaza a la voz provisoria sin tocar el resto.
+- La latencia importa: si el motor clonado es lento, se usa para frases fijas pregeneradas ("Listo", "Abriendo…") y la voz provisoria para el resto.
 
 ---
 
@@ -517,7 +517,7 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 
 | Riesgo | Mitigación |
 |---|---|
-| Calidad de openWakeWord con "Luchi" en español | Spike en F0. Si no alcanza: probar microWakeWord o más muestras reales grabadas. Atajo de teclado siempre disponible |
+| Calidad del detector propio de "Luchi" en español | Spike en F0. Si no alcanza: más muestras reales grabadas, más negativos o un modelo más grande. Atajo de teclado siempre disponible |
 | Latencia total (voz → acción) | Objetivo < 1,5 s con router y < 2,5 s con LLM. `keep_alive` en Ollama, whisper en memoria, `think: false` |
 | VRAM compartida (LLM + whisper + juego) | Medir en F3. Modo juego: descargar el LLM o pasar whisper a CPU mientras hay un juego abierto |
 | La isla no se ve sobre juegos en pantalla completa exclusiva | Por eso la respuesta principal es por voz |
@@ -533,23 +533,23 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 | "Yo / Otros" no distingue a cada participante | Suficiente para el uso previsto. Identificar a cada persona requeriría modelos extra; se evalúa solo si hace falta |
 | La VM de Hyper-V no existe en Windows Home y exige reiniciar | En la PC de desarrollo se mantiene (D8). Antes de distribuir se evalúa VirtualBox, conectarse a un HA existente o usar Luchi sin casa ([docs/PRODUCTO.md](docs/PRODUCTO.md) §4, F13) |
 | Luchi sobrecarga PCs más modestas | Perfiles de hardware, descarga de modelos tras inactividad, modo juego y límites en segundo plano ([docs/PRODUCTO.md](docs/PRODUCTO.md) §3) |
-| Licencias para uso comercial | Revisar modelos, voces de Piper, LLM y librerías antes de publicar (F13). `piper-tts` es **GPL-3.0**: evaluar sherpa-onnx (Apache 2.0, corre modelos de Piper) al implementar el TTS en F2 |
+| Licencias para uso comercial | Revisar modelos, voces de Piper, LLM y librerías antes de publicar (F13). `piper-tts` y `espeak-ng` son **GPL-3.0** y los modelos de openWakeWord **no comerciales**: se reemplazan con desarrollo propio (D28–D30, [docs/LICENCIAS.md](docs/LICENCIAS.md)) |
 | Portar el personaje de Python a TypeScript | El prototipo es la especificación ejecutable: tests visuales que comparan el renderer TS con frames exportados del prototipo (diferencia por píxel con tolerancia), más el "laboratorio del personaje" (propuesta 8) para revisarlo a ojo |
 
 ---
 
 ## 11. Checklist F0
 
-- [ ] Instalar Rust (`rustup`, toolchain MSVC) + Visual Studio Build Tools
-- [ ] Instalar Ollama y descargar `qwen3:8b`
-- [ ] Instalar `uv` y crear el entorno con Python 3.12
-- [ ] Instalar `yt-dlp` y `ffmpeg`
-- [ ] Activar Hyper-V e instalar **Home Assistant OS** en una VM (red en modo puente para descubrir dispositivos)
-- [ ] **Inventario:** marca y modelo de cada luz, tele, Chromecast/Google TV y parlante; qué expone cada uno en Home Assistant
-- [ ] Crear un token de larga duración en Home Assistant
-- [ ] **Spike openWakeWord:** generar muestras de "Luchi" y de "Oye Luchi" con Piper en español, entrenar los dos modelos, medir aciertos y falsos positivos por hora de TV de fondo
-- [ ] Elegir y descargar una voz de Piper en español
-- [ ] `git init` con `.gitignore` que excluya modelos, claves, grabaciones y `voice-data/`
+- [x] Instalar Rust (`rustup`, toolchain MSVC) + Visual Studio Build Tools
+- [x] Instalar Ollama y descargar `qwen3:8b`
+- [x] Instalar `uv` y crear el entorno con Python 3.12
+- [x] Instalar `yt-dlp` y `ffmpeg`
+- [x] Activar Hyper-V e instalar **Home Assistant OS** en una VM (red en modo puente para descubrir dispositivos)
+- [x] **Inventario:** marca y modelo de cada luz, tele, Chromecast/Google TV y parlante; qué expone cada uno en Home Assistant
+- [x] Crear un token de larga duración en Home Assistant
+- [ ] **Spike del detector propio (D29):** generar muestras de "Luchi" y de "Oye Luchi" con voces de licencia permisiva, entrenar los dos modelos, medir aciertos y falsos positivos por hora de TV de fondo
+- [x] Elegir y descargar una voz de Piper en español
+- [x] `git init` con `.gitignore` que excluya modelos, claves, grabaciones y `voice-data/`
 
 ---
 
@@ -583,7 +583,10 @@ Objetivo: que Luchi responda con la voz de mi hija, a partir de grabaciones suya
 | D24 | **Integraciones oficiales de Home Assistant por defecto**, aunque usen la nube del fabricante (por ejemplo, Tuya oficial en lugar de Tuya Local). Lo local queda como opción avanzada | Luchi se va a comercializar: lo oficial viene con HA, lo mantiene su equipo, es lo más compatible y lo más fácil para el usuario. Luchi le habla siempre a HA, así que el código no cambia según la integración. Voz, IA y datos personales siguen sin salir de la PC ([docs/PRODUCTO.md](docs/PRODUCTO.md) §6) |
 | D25 | Luchi se distribuye como producto: web de presentación + instalador para Windows | Pedido del usuario. Agrega requisitos de instalación sin conocimientos técnicos, perfiles de hardware y compatibilidad con Windows Home ([docs/PRODUCTO.md](docs/PRODUCTO.md)) |
 | D26 | Perfiles de hardware (completo, equilibrado, liviano) | Que funcione en PCs sin una GPU grande y que en reposo casi no consuma ([docs/PRODUCTO.md](docs/PRODUCTO.md) §3) |
-| D27 | Voz provisoria **es_AR-daniela-high**; los nombres en inglés se pronuncian con fonemas de espeak `en-us` insertados entre `[[ ]]` | Rioplatense como Luchi. Los fonemas automáticos suenan igual que reescribir a mano y no exigen escribir cada nombre ([spikes/piper](spikes/piper/)). En F9 la reemplaza la voz clonada |
+| D27 | Voz provisoria **es_AR-daniela-high**; los nombres en inglés se pronuncian con fonemas en inglés insertados entre `[[ ]]` (en el spike con espeak; en el producto con el fonemizador y diccionario propios, D30) | Rioplatense como Luchi. Los fonemas automáticos suenan igual que reescribir a mano y no exigen escribir cada nombre ([spikes/piper](spikes/piper/)). En F9 la reemplaza la voz clonada |
+| D28 | **Desarrollo propio primero**: lo de terceros solo si es open source con licencia que permita vender; si no, se hace. Registro en [docs/LICENCIAS.md](docs/LICENCIAS.md) | Pedido del usuario para evitar problemas legales al comercializar. Cada dependencia nueva necesita veredicto ✅ |
+| D29 | ~~openWakeWord~~ → **detector de "Luchi" propio** (log-mel + red convolucional chica, PyTorch → ONNX → onnxruntime) | Los modelos de openWakeWord (incluido el de embeddings) y su dataset de negativos son CC BY-NC-SA (no comercial). El código de openWakeWord queda como referencia. Datos: muestras sintéticas con voces permisivas y negativos CC BY (LibriSpeech, MLS, MUSAN) |
+| D30 | **TTS sin GPL**: fonemizador de español propio + inferencia de modelos VITS con onnxruntime; piper-tts y espeak-ng solo en spikes | `piper-tts` y `espeak-ng` son GPL-3.0. La ortografía española es casi fonética, así que las reglas propias son viables; los nombres en inglés van con un diccionario propio. La voz propia (F9) se entrena con el mismo fonemizador |
 
 ---
 
